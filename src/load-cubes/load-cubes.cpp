@@ -6,12 +6,26 @@ cube::cube(const char* const filename)
 
   if(!cube_file.is_open())
   {
-    std::cerr << "Loading cube " << filename << " failed. File does not exists." << std::endl;
+    std::cerr
+      << "Loading cube " << filename
+      << " failed. File does not exists."
+      << std::endl;
     exit(1);
   }
   else
   {
     std::cerr << "Cube found. Begin loading..." << std::endl;
+
+    data.reserve(dim * dim * dim);
+
+    std::copy(
+      std::istream_iterator<unsigned char>(cube_file),
+      std::istream_iterator<unsigned char>(),
+      std::back_inserter(data));
+
+    assert(data.size() == dim * dim * dim);
+    
+    std::cerr << "Loading done." << std::endl;
   }
 }
 

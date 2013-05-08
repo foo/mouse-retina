@@ -2,7 +2,11 @@
 
 #include <iostream>
 #include <fstream>
+#include <algorithm>
+#include <vector>
+#include <iterator>
 #include <cstdlib>
+#include <cassert>
 
 class cube
 {
@@ -11,6 +15,6 @@ public:
   cube(const char* const filename);
   unsigned char& voxel(int x, int y, int z);
 private:
-  unsigned char data[dim * dim * dim];
+  std::vector<unsigned char> data;
 };
 
