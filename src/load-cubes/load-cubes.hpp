@@ -2,11 +2,15 @@
 
 #include <iostream>
 #include <fstream>
-#include <string>
+#include <cstdlib>
 
 class cube
 {
 public:
-  cube(std::string filename);
+  static const int dim = 128;
+  cube(const char* const filename);
+  unsigned char& voxel(int x, int y, int z);
+private:
+  unsigned char data[dim * dim * dim];
 };
 

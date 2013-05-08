@@ -1,17 +1,22 @@
 #include "load-cubes.hpp"
 
-cube::cube(std::string filename)
+cube::cube(const char* const filename)
 {
-  std::cerr << "Loading cube " << filename << "." << std::endl;
-
-  std::ifstream cube_file;
+  std::ifstream cube_file(filename);
 
   if(!cube_file.is_open())
   {
-    std::cerr << "Cube exists." << std::endl;
+    std::cerr << "Loading cube " << filename << " failed. File does not exists." << std::endl;
+    exit(1);
   }
   else
   {
-    std::cerr << "Cube does not exist." << std::endl;
+    std::cerr << "Cube found. Begin loading..." << std::endl;
   }
 }
+
+unsigned char& cube::voxel(int x, int y, int z)
+{
+  return data[x + dim*y + dim*dim*z];
+}
+
