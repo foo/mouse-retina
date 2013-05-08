@@ -12,7 +12,7 @@ build-cubes-client: build-load-cubes
 	cd src/cubes-client && make
 
 run-cubes-client:
-	bin/cubes-client
+	cd bin/ && ./cubes-client
 
 clean-bin:
 	rm bin/*.o bin/cubes-client
