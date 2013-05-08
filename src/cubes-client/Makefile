@@ -1,5 +1,5 @@
 CC=g++
-FLAGS=-Wall
+FLAGS=-Wall -std=c++0x
 BIN=../../bin
 LIB=$(BIN)/load-cubes.o
 
