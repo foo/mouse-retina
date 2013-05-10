@@ -14,6 +14,7 @@ public:
   static const int dim = 128;
   cube(const char* const filename);
   unsigned char& voxel(int x, int y, int z);
+  unsigned char voxel(int x, int y, int z) const;
 private:
   std::vector<unsigned char> data;
 };
