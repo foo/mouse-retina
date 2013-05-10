@@ -2,12 +2,13 @@
 
 #include "../load-cubes/cube.hpp"
 #include "../load-cubes/grid.hpp"
+#include "../load-cubes/dataset.hpp"
 
 int main(int argc, char* argv[])
 {
-  grid g("../images/e1088_mag1_small");
+  dataset d("../images/e1088_mag1_small");
+  std::cerr << d.grid_data.cube_cache_size() << std::endl;
 
-  std::cerr << g.cube_cache_size() << std::endl;
   return 0;
 }
 
