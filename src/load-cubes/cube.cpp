@@ -1,4 +1,4 @@
-#include "load-cubes.hpp"
+#include "cube.hpp"
 
 cube::cube(const char* const filename)
 {
