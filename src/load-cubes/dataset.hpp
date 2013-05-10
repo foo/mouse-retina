@@ -10,6 +10,10 @@ class dataset
 {
 private:
   void parse_config(std::ifstream& in);
+  bool parse_experiment_var(std::istringstream& iss);
+  bool parse_scale_var(std::istringstream& iss);
+  bool parse_boundary_var(std::istringstream& iss);
+  bool parse_magnification_var(std::istringstream& iss);
   void print_config();
 public:
   dataset(const char* const directory);
