@@ -16,3 +16,15 @@ Usage
 Run following command to download sample dataset from [knossostool.org](http://www.knossostool.org/get.html):
 
 `$ make download-small-dataset`
+
+Run following command to build load-cubes library:
+
+`$ make build-load-cubes`
+
+Run following command to build simple client of load-cubes library:
+
+`$ make build-cubes-client`
+
+Run following command to launch simple client of load-cubes library:
+
+`$ make run-cubes-client`
