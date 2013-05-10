@@ -33,6 +33,6 @@ To run knossos from the command line with a chosen data set (from the knossos di
 
 `$ ./knossos --data-path=path-to-folder-with-data-set`
 
-Remember not to enclose path with apostrophes! For example:
+Remember not to enclose path with apostrophes! (knossos parses the path brutally after the equality sign) For example, this is a valid way:
 
 `$ ./knossos --data-path=e1088_mag1_small`
