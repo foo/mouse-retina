@@ -29,6 +29,18 @@ void dataset::find_min_and_max_coords()
 
 void dataset::check_if_dataset_has_holes()
 {
+  for(int x = min_x; x <= max_x; ++x)
+    for(int y = min_y; y <= max_y; ++y)
+      for(int z = min_z; z <= max_z; ++z)
+      {
+	if(cube_files.find(coord(x, y, z)) == cube_files.end())
+	{
+	  std::cerr
+	    << "Checking if dataset has holes: could not find cube at "
+	    << x << ' ' << y << ' ' << z << std::endl;
+	  exit(1);
+	}
+      }
 }
 
 void dataset::print_cube_files()
@@ -53,7 +65,6 @@ void dataset::populate_cube_files(const char* const dataset_dir)
     if(!fs::is_directory(*file_itr) && fs::extension(*file_itr) == ".raw")
     {
       std::string filename = (*file_itr).path().filename().string();
-      std::cerr << filename << std::endl;
 
       // let's assume filenames are in following format:
       // <dataset name>_x<4 digits>_y<4 digits>_z<4 digits>.raw
