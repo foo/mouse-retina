@@ -3,6 +3,7 @@
 #include "../load-cubes/cube.hpp"
 #include "../load-cubes/grid.hpp"
 #include "../load-cubes/config.hpp"
+#include "../load-cubes/dataset.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -11,6 +12,7 @@ int main(int argc, char* argv[])
   config c(dataset_dir);
   c.print_config();
   std::cerr << g.cube_cache_size() << std::endl;
+  dataset d(dataset_dir);
 
   return 0;
 }
