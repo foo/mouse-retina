@@ -6,17 +6,17 @@
 
 #include "grid.hpp"
 
-class dataset
+class config
 {
 private:
-  void parse_config(std::ifstream& in);
+  void parse_file(std::ifstream& in);
   bool parse_experiment_var(std::istringstream& iss);
   bool parse_scale_var(std::istringstream& iss);
   bool parse_boundary_var(std::istringstream& iss);
   bool parse_magnification_var(std::istringstream& iss);
-  void print_config();
 public:
-  dataset(const char* const directory);
+  config(const char* const directory);
+  void print_config() const;
   std::string experiment_name;
   float scale_x;
   float scale_y;
@@ -25,5 +25,4 @@ public:
   int boundary_y;
   int boundary_z;
   int magnification;
-  grid grid_data;
 };
