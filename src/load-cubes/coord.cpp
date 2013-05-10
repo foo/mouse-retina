@@ -14,14 +14,7 @@ bool coord::operator<(const coord& c) const
       return false;
     else //if(y == c.y)
     {
-      if(z < c.z)
-	return true;
-      else if (c.z < z)
-	return false;
-      else //if(z == c.z)
-      {
-	return true;
-      }
+      return z < c.z;
     }
   }
 }
