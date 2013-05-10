@@ -4,9 +4,31 @@ dataset::dataset(const char* const dataset_dir)
 {
   populate_cube_files(dataset_dir);
 
-  // todo: create a map from coord to files
-  // todo: find min and max x,y,z and store in dataset class member
-  // todo: check if cube has holes inside
+  find_min_and_max_coords();
+
+  check_if_dataset_has_holes();
+}
+
+void dataset::find_min_and_max_coords()
+{
+  namespace fs = boost::filesystem;
+  min_x = min_y = min_z = INT_MAX;
+  max_x = max_y = max_z = INT_MIN;
+  
+  for(std::map<coord, fs::path>::iterator i = cube_files.begin();
+      i != cube_files.end(); ++i)
+  {
+    if(i->first.x > max_x) max_x = i->first.x;
+    if(i->first.x < min_x) min_x = i->first.x;
+    if(i->first.y > max_y) max_y = i->first.y;
+    if(i->first.y < min_y) min_y = i->first.y;
+    if(i->first.z > max_z) max_z = i->first.z;
+    if(i->first.z < min_z) min_z = i->first.z;
+  }
+}
+
+void dataset::check_if_dataset_has_holes()
+{
 }
 
 void dataset::print_cube_files()

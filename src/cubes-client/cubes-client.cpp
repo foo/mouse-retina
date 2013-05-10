@@ -15,6 +15,13 @@ int main(int argc, char* argv[])
   dataset d(dataset_dir);
   d.print_cube_files();
 
+  std::cerr << "min x: " << d.min_x << '\n'
+	    << "max x: " << d.max_x << '\n'
+	    << "min y: " << d.min_y << '\n'
+	    << "max y: " << d.max_y << '\n'
+	    << "min z: " << d.min_z << '\n'
+	    << "max z: " << d.max_z << '\n';
+
   return 0;
 }
 
