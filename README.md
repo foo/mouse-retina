@@ -28,3 +28,11 @@ Run following command to build simple client of load-cubes library:
 Run following command to launch simple client of load-cubes library:
 
 `$ make run-cubes-client`
+
+To run knossos from the command line with a chosen data set (from the knossos directory)
+
+`$ ./knossos --data-path=path-to-folder-with-data-set`
+
+Remember not to enclose path with apostrophes! (knossos parses the path brutally after the equality sign) For example, this is a valid way:
+
+`$ ./knossos --data-path=e1088_mag1_small`
