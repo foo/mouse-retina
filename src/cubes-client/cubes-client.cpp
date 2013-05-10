@@ -8,10 +8,8 @@
 int main(int argc, char* argv[])
 {
   const char* const dataset_dir = "../images/e1088_mag1_small";
-  grid g(dataset_dir);
   config c(dataset_dir);
   c.print_config();
-  std::cerr << g.cube_cache_size() << std::endl;
   dataset d(dataset_dir);
   d.print_cube_files();
 
@@ -21,6 +19,9 @@ int main(int argc, char* argv[])
 	    << "max y: " << d.max_y << '\n'
 	    << "min z: " << d.min_z << '\n'
 	    << "max z: " << d.max_z << '\n';
+
+  grid g(d);
+  std::cerr << "Cube cache size = " << g.cube_cache_size() << std::endl;
 
   return 0;
 }
