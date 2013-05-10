@@ -23,6 +23,24 @@ int main(int argc, char* argv[])
   grid g(d);
   std::cerr << "Cube cache size = " << g.cube_cache_size() << std::endl;
 
+  {
+    const cube& cb = g.get(coord(5, 7, 6));
+    std::cerr << "Voxel from cube (5, 7, 6) at (5,5,5) = " << cb.voxel(5, 5, 5) << std::endl;
+  }
+  
+  std::cerr << "Cube cache size = " << g.cube_cache_size() << std::endl;
+
+  {
+    const cube& cb = g.get(coord(6, 7, 6));
+    std::cerr << "Voxel from cube (6, 7, 6) at (15,5,5) = " << cb.voxel(15, 5, 5) << std::endl;
+  }
+
+  {
+    const cube& cb = g.get(coord(6, 7, 6));
+    std::cerr << "Voxel from cube (6, 7, 6) at (10,10,10) = " << cb.voxel(10, 10, 10) << std::endl;
+  }
+  
+  std::cerr << "Cube cache size = " << g.cube_cache_size() << std::endl;
   return 0;
 }
 
