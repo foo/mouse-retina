@@ -13,6 +13,7 @@ int main(int argc, char* argv[])
   c.print_config();
   std::cerr << g.cube_cache_size() << std::endl;
   dataset d(dataset_dir);
+  d.print_cube_files();
 
   return 0;
 }

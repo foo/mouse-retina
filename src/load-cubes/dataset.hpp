@@ -11,8 +11,8 @@ class dataset
 {
 private:
   void populate_cube_files(const char* const dataset_dir);
-  void print_cube_files();
 public:
+  void print_cube_files();
   std::map<coord, boost::filesystem::path> cube_files;
   dataset(const char* const dataset_dir);
 };

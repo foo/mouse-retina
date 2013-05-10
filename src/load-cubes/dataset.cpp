@@ -3,7 +3,6 @@
 dataset::dataset(const char* const dataset_dir)
 {
   populate_cube_files(dataset_dir);
-  print_cube_files();
 
   // todo: create a map from coord to files
   // todo: find min and max x,y,z and store in dataset class member
