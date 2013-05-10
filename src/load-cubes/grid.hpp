@@ -6,12 +6,13 @@
 
 #include "cube.hpp"
 #include "coord.hpp"
+#include "dataset.hpp"
 
 class grid
 {
 private:
   std::map<coord, cube> cube_cache;
 public:
-  grid(const char* const dataset);
+  grid(const dataset& ds);
   int cube_cache_size() const;
 };

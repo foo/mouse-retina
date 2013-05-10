@@ -1,10 +1,8 @@
 #include "grid.hpp"
 
-grid::grid(const char* const dataset)
+grid::grid(const dataset& ds)
 {
-  std::cerr << "Loading grid from dataset " << dataset << "." << std::endl;
-
-  std::string cube_path = std::string(dataset) + "/x0005/y0007/z0007/070317_e1088_x0005_y0007_z0007.raw";
+  std::string cube_path = (++ds.cube_files.begin())->second.string();
 
   cube c(cube_path.c_str());
   cube_cache.insert(std::make_pair(coord(1, 1, 1), std::move(c)));
