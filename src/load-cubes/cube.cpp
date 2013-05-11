@@ -1,13 +1,13 @@
 #include "cube.hpp"
 
-cube::cube(const char* const filename)
+cube::cube(const boost::filesystem::path& path)
 {
-  std::ifstream cube_file(filename);
+  boost::filesystem::ifstream cube_file(path);
 
   if(!cube_file.is_open())
   {
     std::cerr
-      << "Loading cube " << filename
+      << "Loading cube " << path
       << " failed. File does not exists."
       << std::endl;
     exit(1);

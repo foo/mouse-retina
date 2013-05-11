@@ -8,11 +8,14 @@
 #include <cstdlib>
 #include <cassert>
 
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
+
 class cube
 {
 public:
   static const int dim = 128;
-  cube(const char* const filename);
+  cube(const boost::filesystem::path& path);
   unsigned char& voxel(int x, int y, int z);
   unsigned char voxel(int x, int y, int z) const;
 private:
