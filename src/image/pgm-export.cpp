@@ -2,7 +2,7 @@
 
 void pgm_export(const image& i, const boost::filesystem::path& path)
 {
-  if(!exists(path))
+  if(exists(path))
   {
     std::cerr << "Error exporting to PGM! File "
 	      << path << " already exists." << std::endl;
