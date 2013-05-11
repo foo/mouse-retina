@@ -45,7 +45,6 @@ int main(int argc, char* argv[])
   }
   
   std::cerr << "Cube cache size = " << g.cube_cache_size() << std::endl;
-
   
   {
     const cube& cb = g.get(coord(5, 7, 5));
@@ -53,6 +52,19 @@ int main(int argc, char* argv[])
 	      << cb.voxel(127,127,127) << std::endl;
     assert(cb.voxel(127,127,127) != cb.voxel(127,127,126));
   }
+  
+  std::cerr << "Cube cache size = " << g.cube_cache_size() << std::endl;
+  
+  {
+    const cube& cb = g.get(coord(5, 7, 7));
+    std::cerr << "Voxel from cube (5, 7, 7) at (127,127,127) = "
+	      << cb.voxel(127,127,127) << std::endl;
+  }
+  
+  std::cerr << "Cube cache size = " << g.cube_cache_size() << std::endl;
+
+  std::cerr << "Unload cubes with z higher than 5" << std::endl;
+  g.unload_z_higher_than(5);
   
   std::cerr << "Cube cache size = " << g.cube_cache_size() << std::endl;
 
