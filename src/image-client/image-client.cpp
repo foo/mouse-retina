@@ -12,6 +12,7 @@ int main(int argc, char* argv[])
   dataset d(dataset_dir);
   grid g(d);
   image i = from_grid(g, 10, 200, 10, 200, 10);
+  std::cerr << "Successfully loaded image from grid" << std::endl;
   
   pgm_export(i,
       boost::filesystem::path("../output/video/white_rect.pgm"));
