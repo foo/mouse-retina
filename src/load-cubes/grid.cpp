@@ -1,5 +1,12 @@
 #include "grid.hpp"
 
+grid::grid(const dataset& ds)
+  : ds(ds),
+    min_x(ds.min_x), max_x(ds.max_x),
+    min_y(ds.min_y), max_y(ds.max_y),
+    min_z(ds.min_z), max_z(ds.max_z)
+{}
+
 int grid::cube_cache_size() const
 {
   return cube_cache.size();
