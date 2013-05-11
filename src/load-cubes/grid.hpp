@@ -24,4 +24,5 @@ public:
   void unload_z_lower_than(int z_limit);
 
   const int min_x, max_x, min_y, max_y, min_z, max_z;
+  const int size_x, size_y, size_z;
 };

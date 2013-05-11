@@ -1,10 +1,13 @@
 #include "grid.hpp"
 
-grid::grid(const dataset& ds)
-  : ds(ds),
-    min_x(ds.min_x), max_x(ds.max_x),
-    min_y(ds.min_y), max_y(ds.max_y),
-    min_z(ds.min_z), max_z(ds.max_z)
+grid::grid(const dataset& ds_p)
+  : ds(ds_p),
+    min_x(ds_p.min_x), max_x(ds_p.max_x),
+    min_y(ds_p.min_y), max_y(ds_p.max_y),
+    min_z(ds_p.min_z), max_z(ds_p.max_z),
+    size_x(ds_p.max_x - ds_p.min_x),
+    size_y(ds_p.max_y - ds_p.min_y),
+    size_z(ds_p.max_z - ds_p.min_z)
 {}
 
 int grid::cube_cache_size() const
