@@ -8,7 +8,7 @@ Compilation
 
 Program was developed on Ubuntu 12.04, installing following packages should be enough to compile the program:
 
-`$ apt-get install g++-4.6 make libboost-program-options1.46-dev libboost-filesystem1.46-dev`
+`$ apt-get install g++-4.6 make libboost-program-options1.46-dev libboost-filesystem1.46-dev ffmpeg`
 
 Usage
 ==
