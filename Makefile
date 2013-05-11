@@ -30,4 +30,4 @@ clean-video-pgm:
 	rm output/video/*.pgm
 
 video:
-	cd output/video && ffmpeg -i slice%d.pgm -vcodec mpeg4 video.avi
+	cd output/video && ffmpeg -i slice%d.pgm video.avi
