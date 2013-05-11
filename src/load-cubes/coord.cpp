@@ -2,9 +2,11 @@
 
 bool coord::operator<(const coord& c) const
 {
-  if(x < c.x)
+  // Lexicographical order. Most significant coordinate is z.
+  
+  if(z < c.z)
     return true;
-  else if (c.x < x)
+  else if (c.z < z)
     return false;
   else //if(x == c.x)
   {
@@ -14,7 +16,7 @@ bool coord::operator<(const coord& c) const
       return false;
     else //if(y == c.y)
     {
-      return z < c.z;
+      return x < c.x;
     }
   }
 }
