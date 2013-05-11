@@ -61,7 +61,7 @@ image from_grid(grid& g, int x1, int x2, int y1, int y2, int z)
   assert(z  < g.size_z * cube::dim);
 
   image i;
-  i.allocate(x2 - x1, y2 - y1);
+  i.allocate(x2 - x1, y2 - y1 + 1);
 
   std::vector<unsigned char>::iterator img_iter;
   img_iter = i.data.begin();
