@@ -76,5 +76,5 @@ image from_grid(grid& g, int x1, int x2, int y1, int y2, int z)
     assert(img_iter == i.data.begin() + (y - y1 + 1) * i.width());
   }
 
-  return i; // equivalent to std::move(image)
+  return i;
 }
