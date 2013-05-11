@@ -43,7 +43,7 @@ void copy_row(grid& g, int x1, int x2, int y, int z,
 
   img_iter = std::copy(
     right_cube.voxel_iter(0, y_voxel, z_voxel),
-    right_cube.voxel_iter(x2_voxel, y_voxel, z_voxel) - 1,
+    right_cube.voxel_iter(x2_voxel, y_voxel, z_voxel),
     img_iter);
 }
 
@@ -69,6 +69,9 @@ image from_grid(grid& g, int x1, int x2, int y1, int y2, int z)
   for(int y = y1; y <= y2; ++y)
   {
     copy_row(g, x1, x2, y, z, img_iter);
+
+    // make sure that exactly one row was processed by copy_row
+    assert(img_iter == i.data.begin() + (y - y1 + 1) * i.width());
   }
 
   return i; // equivalent to std::move(image)
