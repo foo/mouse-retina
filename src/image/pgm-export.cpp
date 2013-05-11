@@ -2,6 +2,13 @@
 
 void pgm_export(const image& i, const boost::filesystem::path& path)
 {
+  if(!exists(path))
+  {
+    std::cerr << "Error exporting to PGM! File "
+	      << path << " already exists." << std::endl;
+    exit(1);
+  }
+
   boost::filesystem::ofstream pgm(path);
 
   pgm << "P2\n"
