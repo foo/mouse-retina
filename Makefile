@@ -2,8 +2,15 @@ download-small-dataset:
 	cd images && wget http://www.knossostool.org/e1088_mag1_small.zip
 	cd images && unzip e1088_mag1_small.zip
 
+download-large-dataset:
+	cd images && wget http://www.knossostool.org/e1088_mag1_large.zip
+	cd images && unzip e1088_mag1_large.zip
+
 clean-small-dataset:
 	rm -rf images/e1088_mag1_small.zip images/e1088_mag1_small
+
+clean-large-dataset:
+	rm -rf images/e1088_mag1_large.zip images/e1088_mag1_large
 
 build-load-cubes:
 	cd src/load-cubes && make

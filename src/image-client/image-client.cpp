@@ -10,14 +10,21 @@
 
 int main(int argc, char* argv[])
 {
-  const char* const dataset_dir = "../images/e1088_mag1_small";
+  const char* const dataset_dir = "../images/e1088_mag1_large";
   dataset d(dataset_dir);
   grid g(d);
 
   for(int z = 0; z < cube::dim*g.size_z; ++z)
   {
+    if(z % cube::dim == 0)
+    {
+      const int useless_z = (z / cube::dim) - 1;
+
+      g.unload_z_lower_than(g.min_z + useless_z);
+    }
+    
     std::cout << "Processing z coordinate " << z << std::endl;
-    image i = from_grid(g, 10, 300, 10, 300, z);
+    image i = from_grid(g, 10, 600, 10, 600, z);
     std::cout << "Successfully loaded image from grid" << std::endl;
 
     std::stringstream ss;
