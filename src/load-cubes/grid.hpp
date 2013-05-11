@@ -23,6 +23,11 @@ public:
   void unload_z_higher_than(int z_limit);
   void unload_z_lower_than(int z_limit);
 
+  // values in cube numbers, not voxels
+  // e.g. for two cubes x0007 and x0008 we have
+  // max_x = 9, min_x = 7
   const int min_x, max_x, min_y, max_y, min_z, max_z;
+
+  // size in number of cubes, not voxels
   const int size_x, size_y, size_z;
 };
