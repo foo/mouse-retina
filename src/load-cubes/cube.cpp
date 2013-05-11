@@ -14,8 +14,6 @@ cube::cube(const char* const filename)
   }
   else
   {
-    std::cerr << "Cube found. Begin loading..." << std::endl;
-
     data.reserve(dim * dim * dim);
 
     std::copy(
@@ -23,9 +21,15 @@ cube::cube(const char* const filename)
       std::istream_iterator<unsigned char>(),
       std::back_inserter(data));
 
-    assert(data.size() == dim * dim * dim);
-    
-    std::cerr << "Loading done." << std::endl;
+    if(data.size() != dim * dim * dim)
+    {
+      std::cerr
+	<< "Loading cube " << filename
+	<< " failed. Number of read bytes is " << data.size()
+	<< ", but should be " << dim * dim * dim << "."
+	<< std::endl;
+      exit(1);
+    }
   }
 }
 
