@@ -1,5 +1,7 @@
 #pragma once
 
+#include <algorithm>
+
 #include "image.hpp"
 #include "../load-cubes/grid.hpp"
 #include "../load-cubes/cube.hpp"
