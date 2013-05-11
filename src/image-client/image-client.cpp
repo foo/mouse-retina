@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
   for(int z = 0; z < cube::dim*g.size_z; ++z)
   {
     std::cout << "Processing z coordinate " << z << std::endl;
-    image i = from_grid(g, 10, 300, 10, 300, 10);
+    image i = from_grid(g, 10, 300, 10, 300, z);
     std::cout << "Successfully loaded image from grid" << std::endl;
 
     std::stringstream ss;
