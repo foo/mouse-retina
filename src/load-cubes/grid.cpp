@@ -5,9 +5,9 @@ grid::grid(const dataset& ds_p)
     min_x(ds_p.min_x), max_x(ds_p.max_x),
     min_y(ds_p.min_y), max_y(ds_p.max_y),
     min_z(ds_p.min_z), max_z(ds_p.max_z),
-    size_x(ds_p.max_x - ds_p.min_x),
-    size_y(ds_p.max_y - ds_p.min_y),
-    size_z(ds_p.max_z - ds_p.min_z)
+    size_x(ds_p.max_x - ds_p.min_x + 1),
+    size_y(ds_p.max_y - ds_p.min_y + 1),
+    size_z(ds_p.max_z - ds_p.min_z + 1)
 {}
 
 int grid::cube_cache_size() const
