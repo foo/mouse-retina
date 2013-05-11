@@ -17,8 +17,5 @@ public:
   int width() const { return w; }
   int height() const { return h; }
   bool initialized() const { return w != -1; }
-private:
   std::vector<unsigned char> data;
-public:
-  const std::vector<unsigned char>& get_data() const { return data; }
 };
