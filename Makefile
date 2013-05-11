@@ -14,5 +14,14 @@ build-cubes-client: build-load-cubes
 run-cubes-client:
 	cd bin/ && ./cubes-client
 
+build-image:
+	cd src/image && make
+
+build-image-client: build-image
+	cd src/image-client && make
+
+run-image-client:
+	cd bin && ./image-client
+
 clean-bin:
 	rm bin/*.o bin/cubes-client
