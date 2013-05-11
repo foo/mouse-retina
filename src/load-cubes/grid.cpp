@@ -10,6 +10,26 @@ void grid::unload_from_cache(const coord& c)
   cube_cache.erase(cube_cache.find(c));
 }
 
+void grid::unload_z_higher_than(int z_limit)
+{
+  std::map<coord, cube>::iterator iter_limit;
+
+  const coord coord_limit(INT_MAX, INT_MAX, z_limit);
+  
+  iter_limit = cube_cache.upper_bound(coord_limit);
+  cube_cache.erase(iter_limit, cube_cache.end());
+}
+
+void grid::unload_z_lower_than(int z_limit)
+{
+  std::map<coord, cube>::iterator iter_limit;
+
+  const coord coord_limit(0, 0, z_limit);
+  
+  iter_limit = cube_cache.lower_bound(coord_limit);
+  cube_cache.erase(cube_cache.begin(), iter_limit);
+}
+
 const cube& grid::get(const coord& c)
 {
   std::map<coord, cube>::iterator search_for_cube;

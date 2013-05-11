@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <algorithm>
 #include <boost/filesystem.hpp>
 
 #include "cube.hpp"
@@ -19,4 +20,6 @@ public:
   int cube_cache_size() const;
   const cube& get(const coord& c);
   void unload_from_cache(const coord& c);
+  void unload_z_higher_than(int z_limit);
+  void unload_z_lower_than(int z_limit);
 };
