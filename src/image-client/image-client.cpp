@@ -9,6 +9,8 @@ int main(int argc, char* argv[])
 {
   image i;
   i.white_rect(20, 10);
-  pgm_export(i, boost::filesystem::path("../output/video/white_rect.pgm"));
+  pgm_export(i,
+      boost::filesystem::path("../output/video/white_rect.pgm"));
+  std::cerr << "Successfully wrote white rect." << std::endl;
   return 0;
 }
