@@ -8,6 +8,8 @@ image::image()
 
 void image::allocate(int width, int height)
 {
+  assert(width > 0);
+  assert(height > 0);
   assert(!initialized());
   
   w = width;
