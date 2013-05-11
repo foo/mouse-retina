@@ -62,3 +62,14 @@ unsigned char cube::voxel(int x, int y, int z) const
   return data[x + dim*y + dim*dim*z];
 }
 
+std::vector<unsigned char>::const_iterator cube::voxel_iter(int x, int y, int z) const
+{
+  assert(0 <= x);
+  assert(x <= dim);
+  assert(0 <= y);
+  assert(y <= dim);
+  assert(0 <= z);
+  assert(z <= dim);
+
+  return data.begin() + x + dim*y + dim*dim*z;
+}

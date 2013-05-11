@@ -19,6 +19,7 @@ public:
   grid(const dataset& ds);
   int cube_cache_size() const;
   const cube& get(const coord& c);
+  const cube& get(int x, int y, int z) { return get(coord(x, y, z)); }
   void unload_from_cache(const coord& c);
   void unload_z_higher_than(int z_limit);
   void unload_z_lower_than(int z_limit);

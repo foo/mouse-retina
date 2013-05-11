@@ -18,6 +18,7 @@ public:
   cube(const boost::filesystem::path& path);
   unsigned char& voxel(int x, int y, int z);
   unsigned char voxel(int x, int y, int z) const;
+  std::vector<unsigned char>::const_iterator voxel_iter(int x, int y, int z) const;
 private:
   std::vector<unsigned char> data;
 public:
