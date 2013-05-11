@@ -20,5 +20,7 @@ public:
   unsigned char voxel(int x, int y, int z) const;
 private:
   std::vector<unsigned char> data;
+public:
+  const std::vector<unsigned char>& get_data() const { return data; }
 };
 
