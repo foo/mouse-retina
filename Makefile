@@ -17,7 +17,7 @@ run-cubes-client:
 build-image:
 	cd src/image && make
 
-build-image-client: build-image
+build-image-client: build-image build-load-cubes
 	cd src/image-client && make
 
 run-image-client:
