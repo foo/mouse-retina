@@ -35,7 +35,7 @@ void copy_row(grid& g, int x1, int x2, int y, int z,
     const cube& interior_cube = g.get(g.min_x + c_x, g.min_y + y / cube::dim, g.min_z + z / cube::dim);
     img_iter = std::copy(
       interior_cube.voxel_iter(0, y_voxel, z_voxel),
-     interior_cube.voxel_iter(cube::dim, y_voxel, z_voxel),
+      interior_cube.voxel_iter(cube::dim, y_voxel, z_voxel),
       img_iter);
   }
   
