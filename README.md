@@ -17,17 +17,13 @@ Run following command to download sample dataset from [knossostool.org](http://w
 
 `$ make download-small-dataset`
 
-Run following command to build load-cubes library:
+Build and run program and render a video.
 
-`$ make build-load-cubes`
+`$ make build-image-client`
+`$ make run-image-client`
+`$ make video`
 
-Run following command to build simple client of load-cubes library:
-
-`$ make build-cubes-client`
-
-Run following command to launch simple client of load-cubes library:
-
-`$ make run-cubes-client`
+Video should appear in output/video/ under name video.avi.
 
 To run knossos from the command line with a chosen data set (from the knossos directory)
 
