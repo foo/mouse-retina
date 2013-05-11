@@ -13,5 +13,8 @@ image from_grid(grid& g, int x1, int x2, int y1, int y2, int z)
   assert(y2 < g.size_y * cube::dim);
   assert(z  < g.size_z * cube::dim);
 
-  return image(); // equivalent to std::move(image)
+  image i;
+  i.allocate(x2 - x1, y2 - y1);
+
+  return i; // equivalent to std::move(image)
 }
