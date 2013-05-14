@@ -24,7 +24,7 @@ run-cubes-client:
 build-filters: build-filters
 	cd src/filters && make
 
-build-filters-client: build-filters
+build-filters-client: build-filters clean-filters-pgm
 	cd src/filters-client && make
 
 run-filters-client:
@@ -47,3 +47,6 @@ clean-video-pgm:
 
 video:
 	cd output/video && ffmpeg -i slice%d.pgm video.avi
+
+clean-filters-pgm:
+	rm output/filters/*.pgm
