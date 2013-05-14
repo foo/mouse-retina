@@ -21,6 +21,15 @@ build-cubes-client: build-load-cubes
 run-cubes-client:
 	cd bin/ && ./cubes-client
 
+build-filters: build-filters
+	cd src/filters && make
+
+build-filters-client: build-filters
+	cd src/filters-client && make
+
+run-filters-client:
+	cd bin/ && ./filters-client
+
 build-image:
 	cd src/image && make
 
