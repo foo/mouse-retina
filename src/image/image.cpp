@@ -39,3 +39,8 @@ unsigned char image::get(int x, int y) const
   assert(y < h);
   return data[x + w*y];
 }
+
+bool image::pixel_inside(int x, int y) const
+{
+  return x >= 0 && y >= 0 && x < w && y < h;
+}
