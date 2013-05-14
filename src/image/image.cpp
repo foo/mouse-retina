@@ -6,6 +6,12 @@ image::image()
   
 }
 
+image::image(const image& i)
+  : w(i.w), h(i.h), data(i.data)
+{
+
+}
+
 void image::allocate(int width, int height)
 {
   assert(width > 0);

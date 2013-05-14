@@ -11,6 +11,7 @@ private:
   int w, h;
 public:
   image();
+  image(const image& i);
   void allocate(int width, int height);
   unsigned char& get(int x, int y);
   unsigned char get(int x, int y) const;
