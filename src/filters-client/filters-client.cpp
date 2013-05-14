@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
     << "Applying gaussian filter."
     << std::endl;
   
-  image i_gaussian = gaussian(i);
+  image i_gaussian = gaussian5x5(i);
   
   std::cerr
     << "Exporting image to output/filters/gaussian.pgm."
