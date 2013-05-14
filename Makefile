@@ -40,13 +40,13 @@ run-image-client:
 	cd bin && ./image-client
 
 clean-bin:
-	rm bin/*.o bin/cubes-client bin/image-client
+	rm -f bin/*.o bin/cubes-client bin/image-client
 
 clean-video-pgm:
-	rm output/video/*.pgm
+	rm -f output/video/*.pgm
 
 video:
 	cd output/video && ffmpeg -i slice%d.pgm video.avi
 
 clean-filters-pgm:
-	rm output/filters/*.pgm
+	rm -f output/filters/*.pgm
