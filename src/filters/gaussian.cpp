@@ -56,8 +56,26 @@ image gaussian(const image& i)
 	    g02 + g12 + g22 + g32 + g42 +
 	    g03 + g13 + g23 + g33 + g43 +
 	    g04 + g14 + g24 + g34 + g44) / 159.0f);
-	
     }
+
+  // easiest implementation: borders stays the same
+  // todo: blur the borders too
+
+  for(int x = 0; x < i.width(); ++x)
+  {
+    out.get(x, 0) = i.get(x, 0);
+    out.get(x, 1) = i.get(x, 1);
+    out.get(x, i.height() - 1) = i.get(x, i.height() - 1);
+    out.get(x, i.height() - 2) = i.get(x, i.height() - 2);
+  }
+  
+  for(int y = 0; y < i.width(); ++y)
+  {
+    out.get(0, y) = i.get(0, y);
+    out.get(1, y) = i.get(1, y);
+    out.get(i.width() - 1, y) = i.get(i.width() - 1, y);
+    out.get(i.width() - 2, y) = i.get(i.width() - 2, y);
+  }
   
   return out;
 }

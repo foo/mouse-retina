@@ -28,5 +28,20 @@ image sobel(const image& i)
 	sqrtf(vertical*vertical + horizontal*horizontal));
     }
     
+  // easiest implementation: borders are zeroed
+  // todo: partial gradient
+  
+  for(int x = 0; x < i.width(); ++x)
+  {
+    out.get(x, 0) = 0;
+    out.get(x, i.height() - 1) = 0;
+  }
+  
+  for(int y = 0; y < i.width(); ++y)
+  {
+    out.get(0, y) = 0;
+    out.get(i.width() - 1, y) = 0;
+  }
+  
   return out;
 }
