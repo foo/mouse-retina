@@ -3,7 +3,10 @@ BOOST=-lboost_filesystem -lboost_system
 FLAGS=-Wall -std=c++0x $(BOOST)
 BIN=../../bin
 
-all: $(BIN)/sobel.o $(BIN)/gaussian.o $(BIN)/box.o
+all: $(BIN)/sobel.o $(BIN)/gaussian.o $(BIN)/box.o $(BIN)/sharpen.o
+
+$(BIN)/sharpen.o: sharpen.hpp sharpen.cpp
+	$(CC) -c sharpen.cpp $(FLAGS) -o $(BIN)/sharpen.o
 
 $(BIN)/box.o: box.hpp box.cpp
 	$(CC) -c box.cpp $(FLAGS) -o $(BIN)/box.o

@@ -10,6 +10,7 @@
 
 #include "../filters/sobel.hpp"
 #include "../filters/gaussian.hpp"
+#include "../filters/sharpen.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -39,6 +40,19 @@ int main(int argc, char* argv[])
   
   pgm_export(i_gaussian, boost::filesystem::path(
       "../output/filters/gaussian.pgm"));
+  
+  std::cerr
+    << "Applying sharpening filter."
+    << std::endl;
+  
+  image i_sharpen = sharpen(i);
+  
+  std::cerr
+    << "Exporting image to output/filters/sharpen.pgm."
+    << std::endl;
+  
+  pgm_export(i_sharpen, boost::filesystem::path(
+      "../output/filters/sharpen.pgm"));
   
   std::cerr
     << "Applying sobel filter."
