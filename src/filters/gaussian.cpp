@@ -14,8 +14,8 @@ image gaussian(const image& i)
   image out;
   out.allocate(i.width(), i.height());
 
-  for(int x = 1; x < i.width() - 1; ++x)
-    for(int y = 1; y < i.height() - 1; ++y)
+  for(int x = 2; x < i.width() - 2; ++x)
+    for(int y = 2; y < i.height() - 2; ++y)
     {
       const int g00 = 2 * i.get(x - 2, y - 2);
       const int g10 = 4 * i.get(x - 1, y - 2);
@@ -55,7 +55,7 @@ image gaussian(const image& i)
 	    g01 + g11 + g21 + g31 + g41 +
 	    g02 + g12 + g22 + g32 + g42 +
 	    g03 + g13 + g23 + g33 + g43 +
-	    g04 + g14 + g24 + g34 + g44)) / 159.0f);
+	    g04 + g14 + g24 + g34 + g44) / 159.0f);
 	
     }
   
