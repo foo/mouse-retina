@@ -24,19 +24,13 @@ void image::allocate(int width, int height)
 
 unsigned char& image::get(int x, int y)
 {
-  assert(0 <= x);
-  assert(x < w);
-  assert(0 <= y);
-  assert(y < h);
+  assert(pixel_inside(x, y));
   return data[x + w*y];
 }
 
 unsigned char image::get(int x, int y) const
 {
-  assert(0 <= x);
-  assert(x < w);
-  assert(0 <= y);
-  assert(y < h);
+  assert(pixel_inside(x, y));
   return data[x + w*y];
 }
 
