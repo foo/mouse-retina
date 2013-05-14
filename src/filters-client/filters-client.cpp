@@ -52,6 +52,20 @@ int main(int argc, char* argv[])
   
   pgm_export(i_sobel, boost::filesystem::path(
       "../output/filters/sobel.pgm"));
+  
+  std::cerr
+    << "Applying sobel filter to image after gaussian filter."
+    << std::endl;
+
+  image i_gaussian_sobel = sobel(i_gaussian);
+  
+  std::cerr
+    << "Exporting image to output/filters/gaussian-sobel.pgm."
+    << std::endl;
+  
+  pgm_export(i_gaussian_sobel, boost::filesystem::path(
+      "../output/filters/gaussian-sobel.pgm"));
+  
 
   std::cerr << "Program finished successfully." << std::endl;
 
