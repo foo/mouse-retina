@@ -83,8 +83,7 @@ int main(int argc, char* argv[])
 
     image i_gaussian = gaussian5x5(i);
     image i_gaussian_sharpened = sharpen(i_gaussian);
-    image i_thresholded = threshold(i_gaussian_sharpened, 160);
-    image i_edge_detection = sobel(i_thresholded);
+    image i_edge_detection = sobel(i_gaussian_sharpened);
   
     std::cerr
       << "Exporting image to output/filters/edge-detection.pgm."
@@ -92,6 +91,24 @@ int main(int argc, char* argv[])
   
     pgm_export(i_edge_detection, boost::filesystem::path(
 	"../output/filters/edge-detection.pgm"));
+  }
+
+  {
+    std::cerr
+      << "Applying all filters with thresholding (edge detection)."
+      << std::endl;
+
+    image i_gaussian = gaussian5x5(i);
+    image i_gaussian_sharpened = sharpen(i_gaussian);
+    image i_sobel = sobel(i_gaussian_sharpened);
+    image i_edge_detection = threshold(i_sobel, 130);
+  
+    std::cerr
+      << "Exporting image to output/filters/edge-detection-threshold.pgm."
+      << std::endl;
+  
+    pgm_export(i_edge_detection, boost::filesystem::path(
+	"../output/filters/edge-detection-threshold.pgm"));
   }
 
   std::cerr << "Program finished successfully." << std::endl;
