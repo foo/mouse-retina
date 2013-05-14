@@ -10,7 +10,7 @@ Program was developed on Ubuntu 12.04, installing following packages should be e
 
 `$ apt-get install g++-4.6 make libboost-program-options1.46-dev libboost-filesystem1.46-dev ffmpeg`
 
-Usage
+Video of going through tissue
 ==
 
 Run following command to download sample dataset from [knossostool.org](http://www.knossostool.org/get.html):
@@ -20,10 +20,26 @@ Run following command to download sample dataset from [knossostool.org](http://w
 Build and run program and render a video.
 
 `$ make build-image-client`
+
 `$ make run-image-client`
+
 `$ make video`
 
 Video should appear in output/video/ under name video.avi.
+
+Edge detection
+==
+
+After downloading small dataset:
+
+`$ make build-filters-client`
+
+`$ make run-filters-client`
+
+Original image of slice and slice image after different filters should appear in output/filters directory.
+
+Running knossostool
+==
 
 To run knossos from the command line with a chosen data set (from the knossos directory)
 
