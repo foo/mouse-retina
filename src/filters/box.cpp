@@ -34,7 +34,10 @@ int box_filter::apply_to_pixel(const image& i, int cx, int cy) const
       }
     }
   
-  return sum / denom;
+  if(denom != 0)
+    return sum / denom;
+  else
+    return sum;
 }
 
 int box_filter::get(int x, int y) const
