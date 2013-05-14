@@ -33,11 +33,18 @@ int box_filter::apply_to_pixel(const image& i, int cx, int cy) const
 	sum += get(filter_x, filter_y) * i.get(image_x, image_y);
       }
     }
+
+  int result;
   
   if(denom != 0)
-    return sum / denom;
+    result = sum / denom;
   else
-    return sum;
+    result = sum;
+
+  if(result < 0) result = 0;
+  if(result > 255) result = 255;
+
+  return result;
 }
 
 int box_filter::get(int x, int y) const
