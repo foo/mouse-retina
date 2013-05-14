@@ -21,10 +21,16 @@ int box_filter::apply_to_pixel(const image& i, int cx, int cy) const
   for(int x = -offset; x <= offset; x++)
     for(int y = -offset; y <= offset; y++)
     {
-      if(i.pixel_inside(x, y))
+      const int image_x = cx + x;
+      const int image_y = cy + y;
+
+      const int filter_x = x + offset;
+      const int filter_y = y + offset;
+      
+      if(i.pixel_inside(image_x, image_y))
       {
-	denom += get(x, y);
-	sum += get(x, y) * i.get(x, y);
+	denom += get(filter_x, filter_y);
+	sum += get(filter_x, filter_y) * i.get(image_x, image_y);
       }
     }
   
@@ -33,6 +39,10 @@ int box_filter::apply_to_pixel(const image& i, int cx, int cy) const
 
 int box_filter::get(int x, int y) const
 {
+  assert(0 <= x);
+  assert(x < dim);
+  assert(0 <= y);
+  assert(y < dim);
   return filter[x + dim*y];
 }
 
