@@ -48,11 +48,13 @@ int main(int argc, char* argv[])
   
       image i_edge_detection_with_dilation =
 	dilation(
-	  threshold(
-	    sobel(
-	      sharpen(
-		gaussian5x5(i))),
-	    threshold_value));
+	  erosion(
+	    dilation(
+	      threshold(
+		sobel(
+		  sharpen(
+		    gaussian5x5(i))),
+		threshold_value))));
 
       {
 	std::stringstream ss;
@@ -63,7 +65,7 @@ int main(int argc, char* argv[])
       }
       {
 	std::stringstream ss;
-	ss << "../output/filters/edge_detection_dilation" << threshold_value << ".pgm";
+	ss << "../output/filters/edge_detection_minkowski" << threshold_value << ".pgm";
       
 	std::cerr	<< "Exporting image to " << ss.str() << std::endl;
 	pgm_export(i_edge_detection_with_dilation, boost::filesystem::path(ss.str()));
