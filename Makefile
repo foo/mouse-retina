@@ -21,7 +21,7 @@ build-cubes-client: build-load-cubes
 run-cubes-client:
 	cd bin/ && ./cubes-client
 
-build-filters: build-image build-load-cubes
+build-filters: build-load-cubes build-image
 	cd src/filters && make
 
 build-filters-client: build-filters
