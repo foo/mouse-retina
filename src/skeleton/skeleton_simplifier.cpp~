@@ -1,8 +1,3 @@
-#include <cstdio>
-#include <iostream>
-#include <algorithm>
-#include <cstring>
-#include <vector>
 #include "skeleton_simplifier.hpp"
 
 void simplifier::dfs(int x, graph * pgraf){

@@ -15,6 +15,10 @@
 #define ft first
 #define sd second
 
+class edge{
+    int begin, end;
+};
+
 class simplifier{
 public:
     
