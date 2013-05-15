@@ -12,7 +12,5 @@ image dilation(const image& i)
 
 image erosion(const image& i)
 {
-  // unimplemented
-  
-  return i;
+  return negation(dilation(negation(i)));
 }
