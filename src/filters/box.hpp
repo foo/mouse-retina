@@ -9,7 +9,7 @@ class box_filter
 private:
   int dim;
   std::vector<int> filter;
-  int get(int x, int y) const;
+  int element(int x, int y) const;
 public:
   box_filter(const std::vector<int>& filter_data);
 

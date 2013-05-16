@@ -23,7 +23,7 @@ image sobel(const image& i)
       const int vertical = vertical_gradient.apply_to_pixel(i, x, y);
       const int horizontal = horizontal_gradient.apply_to_pixel(i, x, y);
       
-      out.get(x,y) = 
+      out.pixel(x,y) = 
 	sqrtf(vertical*vertical + horizontal*horizontal);
     }
   

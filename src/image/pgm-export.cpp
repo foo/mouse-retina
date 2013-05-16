@@ -18,7 +18,7 @@ void pgm_export(const image& i, const boost::filesystem::path& path)
   for(int y = 0; y < i.height(); ++y)
   {
     for(int x = 0; x < i.width(); ++x)
-      pgm << static_cast<int>(i.get(x, y)) << ' ';
+      pgm << static_cast<int>(i.pixel(x, y)) << ' ';
     pgm << '\n';
   }
 }

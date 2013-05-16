@@ -28,19 +28,19 @@ void image::allocate(int width, int height)
     static_cast<unsigned char>(255));
 }
 
-unsigned char& image::get(int x, int y)
+unsigned char& image::pixel(int x, int y)
 {
-  assert(pixel_inside(x, y));
+  assert(is_inside(x, y));
   return data[x + w*y];
 }
 
-unsigned char image::get(int x, int y) const
+unsigned char image::pixel(int x, int y) const
 {
-  assert(pixel_inside(x, y));
+  assert(is_inside(x, y));
   return data[x + w*y];
 }
 
-bool image::pixel_inside(int x, int y) const
+bool image::is_inside(int x, int y) const
 {
   return x >= 0 && y >= 0 && x < w && y < h;
 }

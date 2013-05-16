@@ -27,10 +27,10 @@ int box_filter::apply_to_pixel(const image& i, int cx, int cy) const
       const int filter_x = x + offset;
       const int filter_y = y + offset;
       
-      if(i.pixel_inside(image_x, image_y))
+      if(i.is_inside(image_x, image_y))
       {
-	denom += get(filter_x, filter_y);
-	sum += get(filter_x, filter_y) * i.get(image_x, image_y);
+	denom += element(filter_x, filter_y);
+	sum += element(filter_x, filter_y) * i.pixel(image_x, image_y);
       }
     }
 
@@ -47,7 +47,7 @@ int box_filter::apply_to_pixel(const image& i, int cx, int cy) const
   return result;
 }
 
-int box_filter::get(int x, int y) const
+int box_filter::element(int x, int y) const
 {
   assert(0 <= x);
   assert(x < dim);
@@ -64,7 +64,7 @@ image box_filter::apply_naive(const image& i) const
   for(int x = 0; x < i.width(); ++x)
     for(int y = 0; y < i.height(); ++y)
     {
-      out.get(x, y) = static_cast<unsigned char>(
+      out.pixel(x, y) = static_cast<unsigned char>(
 	apply_to_pixel(i, x, y));
     }
 

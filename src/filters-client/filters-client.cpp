@@ -47,14 +47,13 @@ int main(int argc, char* argv[])
 	    threshold_value);
   
       image i_edge_detection_with_dilation =
-	dilation(
 	  erosion(
 	    dilation(
 	      threshold(
 		sobel(
 		  sharpen(
 		    gaussian5x5(i))),
-		threshold_value))));
+		threshold_value)));
 
       {
 	std::stringstream ss;

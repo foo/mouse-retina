@@ -13,11 +13,11 @@ public:
   image();
   image(const image& i);
   void allocate(int width, int height);
-  unsigned char& get(int x, int y);
-  unsigned char get(int x, int y) const;
+  unsigned char& pixel(int x, int y);
+  unsigned char pixel(int x, int y) const;
   int width() const { return w; }
   int height() const { return h; }
   bool initialized() const { return w != -1; }
   std::vector<unsigned char> data;
-  bool pixel_inside(int x, int y) const;
+  bool is_inside(int x, int y) const;
 };
