@@ -1,6 +1,6 @@
-#include "dataset.hpp"
+#include "dataset_files.hpp"
 
-dataset::dataset(const char* const dataset_dir)
+dataset_files::dataset_files(const char* const dataset_dir)
 {
   populate_cube_files(dataset_dir);
 
@@ -9,7 +9,7 @@ dataset::dataset(const char* const dataset_dir)
   check_if_dataset_has_holes();
 }
 
-void dataset::find_min_and_max_coords()
+void dataset_files::find_min_and_max_coords()
 {
   namespace fs = boost::filesystem;
   min_x = min_y = min_z = INT_MAX;
@@ -27,7 +27,7 @@ void dataset::find_min_and_max_coords()
   }
 }
 
-void dataset::check_if_dataset_has_holes()
+void dataset_files::check_if_dataset_has_holes()
 {
   for(int x = min_x; x <= max_x; ++x)
     for(int y = min_y; y <= max_y; ++y)
@@ -43,7 +43,7 @@ void dataset::check_if_dataset_has_holes()
       }
 }
 
-void dataset::print_cube_files()
+void dataset_files::print_cube_files()
 {
   namespace fs = boost::filesystem;
   for(std::map<coord, fs::path>::iterator i = cube_files.begin();
@@ -54,7 +54,7 @@ void dataset::print_cube_files()
   }
 }
 
-void dataset::populate_cube_files(const char* const dataset_dir)
+void dataset_files::populate_cube_files(const char* const dataset_dir)
 {
   namespace fs = boost::filesystem;
   fs::path dataset_root(dataset_dir);

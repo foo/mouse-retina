@@ -1,6 +1,6 @@
 #include "grid.hpp"
 
-grid::grid(const dataset& ds_p)
+grid::grid(const dataset_files& ds_p)
   : ds(ds_p),
     min_x(ds_p.min_x), max_x(ds_p.max_x),
     min_y(ds_p.min_y), max_y(ds_p.max_y),

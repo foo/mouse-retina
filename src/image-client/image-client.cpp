@@ -11,7 +11,7 @@
 int main(int argc, char* argv[])
 {
   const char* const dataset_dir = "../images/e1088_mag1_large";
-  dataset d(dataset_dir);
+  dataset_files d(dataset_dir);
   grid g(d);
 
   for(int z = 0; z < cube::dim*g.size_z; ++z)

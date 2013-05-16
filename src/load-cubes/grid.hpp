@@ -8,15 +8,15 @@
 
 #include "cube.hpp"
 #include "coord.hpp"
-#include "dataset.hpp"
+#include "dataset_files.hpp"
 
 class grid
 {
 private:
-  const dataset& ds;
+  const dataset_files& ds;
   std::map<coord, cube> cube_cache;
 public:
-  grid(const dataset& ds);
+  grid(const dataset_files& ds);
   int cube_cache_size() const;
   const cube& get(const coord& c);
   const cube& get(int x, int y, int z) { return get(coord(x, y, z)); }

@@ -17,7 +17,7 @@
 int main(int argc, char* argv[])
 {
   const char* const dataset_dir = "../images/e1088_mag1_small";
-  dataset d(dataset_dir);
+  dataset_files d(dataset_dir);
   grid g(d);
 
   std::cerr << "Obtaining image from grid." << std::endl;

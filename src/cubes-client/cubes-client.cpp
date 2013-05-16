@@ -4,14 +4,14 @@
 #include "../load-cubes/cube.hpp"
 #include "../load-cubes/grid.hpp"
 #include "../load-cubes/config.hpp"
-#include "../load-cubes/dataset.hpp"
+#include "../load-cubes/dataset_files.hpp"
 
 int main(int argc, char* argv[])
 {
   const char* const dataset_dir = "../images/e1088_mag1_small";
   config c(dataset_dir);
   c.print_config();
-  dataset d(dataset_dir);
+  dataset_files d(dataset_dir);
   d.print_cube_files();
 
   std::cerr << "min x: " << d.min_x << '\n'
