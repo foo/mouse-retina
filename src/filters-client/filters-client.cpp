@@ -4,9 +4,9 @@
 #include <iomanip>
 
 #include "../load-cubes/grid.hpp"
+#include "../load-cubes/cross-section.hpp"
 #include "../image/image.hpp"
 #include "../image/pgm-export.hpp"
-#include "../image/from-grid.hpp"
 
 #include "../filters/sobel.hpp"
 #include "../filters/gaussian.hpp"
@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
   grid g(d);
 
   std::cerr << "Obtaining image from grid." << std::endl;
-  image i = from_grid(g, 10, 300, 10, 300, 100);
+  image i = cross_section(g, 10, 300, 10, 300, 100);
 
   {
     std::cerr

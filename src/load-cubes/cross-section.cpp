@@ -1,4 +1,4 @@
-#include "from-grid.hpp"
+#include "cross-section.hpp"
 
 /*
   +---------+--------+---------+--------+--------+-------+--------+------+
@@ -49,7 +49,7 @@ void copy_row(grid& g, int x1, int x2, int y, int z,
     img_iter);
 }
 
-image from_grid(grid& g, int x1, int x2, int y1, int y2, int z)
+image cross_section(grid& g, int x1, int x2, int y1, int y2, int z)
 {
   assert(x1 >= 0);
   assert(y1 >= 0);

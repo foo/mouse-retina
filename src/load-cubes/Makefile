@@ -3,7 +3,10 @@ BOOST=-lboost_filesystem -lboost_system
 FLAGS=-Wall -std=c++0x $(BOOST)
 BIN=../../bin
 
-all: $(BIN)/cube.o $(BIN)/grid.o $(BIN)/config.o $(BIN)/dataset.o $(BIN)/coord.o
+all: $(BIN)/cube.o $(BIN)/grid.o $(BIN)/config.o $(BIN)/dataset.o $(BIN)/coord.o $(BIN)/cross-section.o
+
+$(BIN)/cross-section.o: cross-section.hpp cross-section.cpp
+	$(CC) -c cross-section.cpp $(FLAGS) -o $(BIN)/cross-section.o
 
 $(BIN)/cube.o: cube.hpp cube.cpp
 	$(CC) -c cube.cpp $(FLAGS) -o $(BIN)/cube.o

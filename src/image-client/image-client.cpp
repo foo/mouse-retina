@@ -6,7 +6,7 @@
 #include "../load-cubes/grid.hpp"
 #include "../image/image.hpp"
 #include "../image/pgm-export.hpp"
-#include "../image/from-grid.hpp"
+#include "../load-cubes/cross-section.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     }
     
     std::cout << "Processing z coordinate " << z << std::endl;
-    image i = from_grid(g, 10, 600, 10, 600, z);
+    image i = cross_section(g, 10, 600, 10, 600, z);
     std::cout << "Successfully loaded image from grid" << std::endl;
 
     std::stringstream ss;
