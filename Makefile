@@ -12,16 +12,16 @@ clean-small-dataset:
 clean-large-dataset:
 	rm -rf images/e1088_mag1_large.zip images/e1088_mag1_large
 
-build-load-cubes:
-	cd src/load-cubes && make
+build-dataset:
+	cd src/dataset && make
 
-build-cubes-client: build-load-cubes
-	cd src/cubes-client && make
+build-dataset-client: build-dataset
+	cd src/dataset-client && make
 
-run-cubes-client:
-	cd bin/ && ./cubes-client
+run-dataset-client:
+	cd bin/ && ./dataset-client
 
-build-filters: build-load-cubes build-image
+build-filters: build-dataset build-image
 	cd src/filters && make
 
 build-filters-client: build-filters
@@ -33,14 +33,14 @@ run-filters-client: clean-filters-pgm
 build-image:
 	cd src/image && make
 
-build-image-client: build-load-cubes build-image
+build-image-client: build-dataset build-image
 	cd src/image-client && make
 
 run-image-client:
 	cd bin && ./image-client
 
 clean-bin:
-	rm -f bin/*.o bin/cubes-client bin/image-client bin/filters-client
+	rm -f bin/*.o bin/dataset-client bin/image-client bin/filters-client
 
 clean-video-pgm:
 	rm -f output/video/*.pgm

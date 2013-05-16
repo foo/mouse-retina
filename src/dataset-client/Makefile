@@ -4,5 +4,5 @@ FLAGS=-Wall -std=c++0x $(BOOST)
 BIN=../../bin
 LIB=$(BIN)/cube.o $(BIN)/grid.o $(BIN)/config.o $(BIN)/dataset_files.o $(BIN)/coord.o
 
-all: cubes-client.cpp
-	$(CC) cubes-client.cpp $(LIB) $(FLAGS) -o $(BIN)/cubes-client
+all: dataset-client.cpp
+	$(CC) dataset-client.cpp $(LIB) $(FLAGS) -o $(BIN)/dataset-client

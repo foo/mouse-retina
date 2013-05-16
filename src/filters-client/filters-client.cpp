@@ -3,8 +3,8 @@
 #include <sstream>
 #include <iomanip>
 
-#include "../load-cubes/grid.hpp"
-#include "../load-cubes/cross-section.hpp"
+#include "../dataset/grid.hpp"
+#include "../dataset/cross-section.hpp"
 #include "../image/image.hpp"
 #include "../image/pgm-export.hpp"
 

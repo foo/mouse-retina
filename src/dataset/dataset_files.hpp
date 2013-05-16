@@ -6,7 +6,7 @@
 #include <climits>
 #include <boost/filesystem.hpp>
 
-#include "../load-cubes/coord.hpp"
+#include "coord.hpp"
 
 class dataset_files
 {

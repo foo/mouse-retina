@@ -1,10 +1,10 @@
 #include <iostream>
 #include <cassert>
 
-#include "../load-cubes/cube.hpp"
-#include "../load-cubes/grid.hpp"
-#include "../load-cubes/config.hpp"
-#include "../load-cubes/dataset_files.hpp"
+#include "../dataset/cube.hpp"
+#include "../dataset/grid.hpp"
+#include "../dataset/config.hpp"
+#include "../dataset/dataset_files.hpp"
 
 int main(int argc, char* argv[])
 {
