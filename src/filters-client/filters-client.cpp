@@ -3,7 +3,7 @@
 #include <sstream>
 #include <iomanip>
 
-#include "../dataset/grid.hpp"
+#include "../dataset/dataset.hpp"
 #include "../dataset/cross-section.hpp"
 #include "../image/image.hpp"
 #include "../image/pgm-export.hpp"
@@ -17,11 +17,10 @@
 int main(int argc, char* argv[])
 {
   const char* const dataset_dir = "../images/e1088_mag1_small";
-  dataset_files d(dataset_dir);
-  grid g(d);
+  dataset d(dataset_dir);
 
   std::cerr << "Obtaining image from grid." << std::endl;
-  image i = cross_section(g, 10, 300, 10, 300, 100);
+  image i = cross_section(d, 10, 300, 10, 300, 100);
 
   {
     std::cerr

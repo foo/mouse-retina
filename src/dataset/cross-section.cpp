@@ -12,7 +12,7 @@
   2nd cube is left_cube, cubes 3-5 are interior cubes, 6th cube is right_cube.
  */
 
-void copy_row(grid& g, int x1, int x2, int y, int z,
+void copy_row(dataset& g, int x1, int x2, int y, int z,
   std::vector<unsigned char>::iterator& img_iter)
 {
   const int z_voxel = z % cube::dim;
@@ -25,7 +25,7 @@ void copy_row(grid& g, int x1, int x2, int y, int z,
   const int cube_y = g.min_y + y / cube::dim;
   const int cube_z = g.min_z + z / cube::dim;
 
-  const cube& left_cube = g.get(left_cube_x, cube_y, cube_z);
+  const cube& left_cube = g.get_cube(left_cube_x, cube_y, cube_z);
 
   img_iter = std::copy(
     left_cube.voxel_iter(x1_voxel, y_voxel, z_voxel),
@@ -34,14 +34,14 @@ void copy_row(grid& g, int x1, int x2, int y, int z,
 
   for(int c_x = left_cube_x + 1; c_x < right_cube_x; ++c_x)
   {
-    const cube& interior_cube = g.get(c_x, cube_y, cube_z);
+    const cube& interior_cube = g.get_cube(c_x, cube_y, cube_z);
     img_iter = std::copy(
       interior_cube.voxel_iter(0, y_voxel, z_voxel),
       interior_cube.voxel_iter(cube::dim, y_voxel, z_voxel),
       img_iter);
   }
   
-  const cube& right_cube = g.get(right_cube_x, cube_y, cube_z);
+  const cube& right_cube = g.get_cube(right_cube_x, cube_y, cube_z);
 
   img_iter = std::copy(
     right_cube.voxel_iter(0, y_voxel, z_voxel),
@@ -49,7 +49,7 @@ void copy_row(grid& g, int x1, int x2, int y, int z,
     img_iter);
 }
 
-image cross_section(grid& g, int x1, int x2, int y1, int y2, int z)
+image cross_section(dataset& g, int x1, int x2, int y1, int y2, int z)
 {
   assert(x1 >= 0);
   assert(y1 >= 0);

@@ -4,8 +4,6 @@
 #include <fstream>
 #include <sstream>
 
-#include "grid.hpp"
-
 class config
 {
 private:

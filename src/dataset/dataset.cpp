@@ -1,26 +1,26 @@
-#include "grid.hpp"
+#include "dataset.hpp"
 
-grid::grid(const dataset_files& ds_p)
-  : ds(ds_p),
-    min_x(ds_p.min_x), max_x(ds_p.max_x),
-    min_y(ds_p.min_y), max_y(ds_p.max_y),
-    min_z(ds_p.min_z), max_z(ds_p.max_z),
-    size_x(ds_p.max_x - ds_p.min_x + 1),
-    size_y(ds_p.max_y - ds_p.min_y + 1),
-    size_z(ds_p.max_z - ds_p.min_z + 1)
+dataset::dataset(const char* const dataset_dir)
+  : ds_files(dataset_dir),
+    min_x(ds_files.min_x), max_x(ds_files.max_x),
+    min_y(ds_files.min_y), max_y(ds_files.max_y),
+    min_z(ds_files.min_z), max_z(ds_files.max_z),
+    size_x(ds_files.max_x - ds_files.min_x + 1),
+    size_y(ds_files.max_y - ds_files.min_y + 1),
+    size_z(ds_files.max_z - ds_files.min_z + 1)
 {}
 
-int grid::cube_cache_size() const
+int dataset::cube_cache_size() const
 {
   return cube_cache.size();
 }
 
-void grid::unload_from_cache(const coord& c)
+void dataset::unload_from_cache(const coord& c)
 {
   cube_cache.erase(cube_cache.find(c));
 }
 
-void grid::unload_z_higher_than(int z_limit)
+void dataset::unload_z_higher_than(int z_limit)
 {
   std::map<coord, cube>::iterator iter_limit;
 
@@ -30,7 +30,7 @@ void grid::unload_z_higher_than(int z_limit)
   cube_cache.erase(iter_limit, cube_cache.end());
 }
 
-void grid::unload_z_lower_than(int z_limit)
+void dataset::unload_z_lower_than(int z_limit)
 {
   std::map<coord, cube>::iterator iter_limit;
 
@@ -40,7 +40,7 @@ void grid::unload_z_lower_than(int z_limit)
   cube_cache.erase(cube_cache.begin(), iter_limit);
 }
 
-const cube& grid::get(const coord& c)
+const cube& dataset::get_cube(const coord& c)
 {
   std::map<coord, cube>::iterator search_for_cube;
   search_for_cube = cube_cache.find(c);
@@ -53,9 +53,9 @@ const cube& grid::get(const coord& c)
   {
     // load cube from disk to memory
 
-    auto search_for_file = ds.cube_files.find(c);
+    auto search_for_file = ds_files.cube_files.find(c);
 
-    if(search_for_file != ds.cube_files.end())
+    if(search_for_file != ds_files.cube_files.end())
     {
       cube new_cube(search_for_file->second.string().c_str());
       cube_cache.insert(std::make_pair(c, std::move(new_cube)));

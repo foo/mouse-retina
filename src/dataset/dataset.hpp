@@ -10,16 +10,16 @@
 #include "coord.hpp"
 #include "dataset_files.hpp"
 
-class grid
+class dataset
 {
 private:
-  const dataset_files& ds;
+  dataset_files ds_files;
   std::map<coord, cube> cube_cache;
 public:
-  grid(const dataset_files& ds);
+  dataset(const char* const dataset_dir);
   int cube_cache_size() const;
-  const cube& get(const coord& c);
-  const cube& get(int x, int y, int z) { return get(coord(x, y, z)); }
+  const cube& get_cube(const coord& c);
+  const cube& get_cube(int x, int y, int z) { return get_cube(coord(x, y, z)); }
   void unload_from_cache(const coord& c);
   void unload_z_higher_than(int z_limit);
   void unload_z_lower_than(int z_limit);

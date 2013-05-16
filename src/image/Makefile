@@ -11,5 +11,5 @@ $(BIN)/image.o: image.hpp image.cpp
 $(BIN)/binary-operations.o: binary-operations.hpp binary-operations.cpp
 	$(CC) -c binary-operations.cpp $(FLAGS) -o $(BIN)/binary-operations.o
 
-$(BIN)/pgm-export.o: pgm-export.hpp pgm-export.cpp $(BIN)/image.o $(BIN)/grid.o $(BIN)/cube.o
+$(BIN)/pgm-export.o: pgm-export.hpp pgm-export.cpp
 	$(CC) -c pgm-export.cpp $(FLAGS) -o $(BIN)/pgm-export.o
