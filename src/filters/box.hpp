@@ -7,7 +7,7 @@
 class box_filter
 {
 private:
-  int dim;
+  unsigned int dim;
   std::vector<int> filter;
   int element(int x, int y) const;
 public:
