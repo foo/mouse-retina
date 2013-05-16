@@ -57,9 +57,7 @@ Program is structured into three modules: dataset, image and filters. Dependenci
 Image module consists of:
 
 * image class, which keeps pixel data in std::vector as well as image dimensions
-
 * pgm export module, that exports image to Portable GrayMap format
-
 * binary operations module, which contains operations on images, whose colors are only black and white (only 0 and 255 values allowed).
 
 Dataset module consists of:
@@ -77,3 +75,5 @@ Filters module consists of:
 * filters like gaussian, sobel, sharpening filter
 * Minkowski operations: erosion and dilation
 * threshold operation
+
+For each module there is corresponding client module that tests functionality of the module and provides example usage.
