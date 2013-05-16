@@ -43,6 +43,9 @@ build-clients: build-dataset-client build-image-client build-filters-client
 
 clean-bin:
 	rm -f bin/*.o bin/dataset-client bin/image-client bin/filters-client
+	cd src/image && make clean
+	cd src/dataset && make clean
+	cd src/filters && make clean
 
 clean-video-pgm:
 	rm -f output/video/*.pgm
