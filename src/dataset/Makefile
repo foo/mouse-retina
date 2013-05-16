@@ -1,29 +1,19 @@
-MODULES=cube dataset config dataset_files coord cross-section
+MODULE=dataset-module
+SUBMODULES=cube dataset config dataset_files coord cross-section
 
 CC=g++
 BOOST=-lboost_filesystem -lboost_system
 FLAGS=-Wall -std=c++0x $(BOOST)
 BIN=../../bin
 
-OBJS:=$(addprefix $(BIN)/,$(MODULES:=.o))
+SUBMODULE_OBJS:=$(SUBMODULES:=.o)
+MODULE_OBJ=$(BIN)/$(MODULE).o
 
-all: $(OBJS)
+$(MODULE_OBJ): $(SUBMODULE_OBJS)
+	ld -r $^ -o $@
 
-$(BIN)/cross-section.o: cross-section.hpp cross-section.cpp
-	$(CC) -c cross-section.cpp $(FLAGS) -o $(BIN)/cross-section.o
+$(SUBMODULE_OBJS): %.o: %.cpp %.hpp
+	$(CC) -c $< $(FLAGS) -o $@
 
-$(BIN)/cube.o: cube.hpp cube.cpp
-	$(CC) -c cube.cpp $(FLAGS) -o $(BIN)/cube.o
-
-$(BIN)/dataset.o: dataset.hpp dataset.cpp
-	$(CC) -c dataset.cpp $(FLAGS) -o $(BIN)/dataset.o
-
-$(BIN)/config.o: config.hpp config.cpp
-	$(CC) -c config.cpp $(FLAGS) -o $(BIN)/config.o
-
-$(BIN)/dataset_files.o: dataset_files.hpp dataset_files.cpp
-	$(CC) -c dataset_files.cpp $(FLAGS) -o $(BIN)/dataset_files.o
-
-$(BIN)/coord.o: coord.hpp coord.cpp
-	$(CC) -c coord.cpp $(FLAGS) -o $(BIN)/coord.o
-
+clean:
+	rm -f $(SUBMODULE_OBJS)

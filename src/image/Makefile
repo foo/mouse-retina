@@ -1,15 +1,19 @@
+MODULE=image-module
+SUBMODULES=binary-operations image pgm-export
+
 CC=g++
 BOOST=-lboost_filesystem -lboost_system
 FLAGS=-Wall -std=c++0x $(BOOST)
 BIN=../../bin
 
-all: $(BIN)/image.o $(BIN)/pgm-export.o $(BIN)/binary-operations.o
+SUBMODULE_OBJS:=$(SUBMODULES:=.o)
+MODULE_OBJ=$(BIN)/$(MODULE).o
 
-$(BIN)/image.o: image.hpp image.cpp
-	$(CC) -c image.cpp $(FLAGS) -o $(BIN)/image.o
+$(MODULE_OBJ): $(SUBMODULE_OBJS)
+	ld -r $^ -o $@
 
-$(BIN)/binary-operations.o: binary-operations.hpp binary-operations.cpp
-	$(CC) -c binary-operations.cpp $(FLAGS) -o $(BIN)/binary-operations.o
+$(SUBMODULE_OBJS): %.o: %.cpp %.hpp
+	$(CC) -c $< $(FLAGS) -o $@
 
-$(BIN)/pgm-export.o: pgm-export.hpp pgm-export.cpp
-	$(CC) -c pgm-export.cpp $(FLAGS) -o $(BIN)/pgm-export.o
+clean:
+	rm -f $(SUBMODULE_OBJS)
