@@ -39,6 +39,8 @@ build-image-client: build-dataset build-image
 run-image-client:
 	cd bin && ./image-client
 
+build-clients: build-dataset-client build-image-client build-filters-client
+
 clean-bin:
 	rm -f bin/*.o bin/dataset-client bin/image-client bin/filters-client
 
