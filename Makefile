@@ -40,7 +40,7 @@ run-image-client:
 	cd bin && ./image-client
 
 clean-bin:
-	rm -f bin/*.o bin/cubes-client bin/image-client
+	rm -f bin/*.o bin/cubes-client bin/image-client bin/filters-client
 
 clean-video-pgm:
 	rm -f output/video/*.pgm
