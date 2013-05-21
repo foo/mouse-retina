@@ -10,6 +10,7 @@
 #define iszero(x) ((x) < EPS && (x) > -EPS)
 #define PI (2*acos(0))
 
+
 class Gradient{
 	int x, y; 
 	double angle, mag;

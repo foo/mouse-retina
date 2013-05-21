@@ -1,4 +1,10 @@
 #include "gradient.hpp"
+#include "../image/image.hpp"
+#include "../image/ppm-export.hpp"
+#include <iostream>
+#include <cassert>
+#include <sstream>
+#include <iomanip>
 
 Gradient::Gradient(int x_, int y_, double ang_, double mag_){
 	x = x_; y = y_; angle = ang_; mag = mag_;
@@ -28,7 +34,7 @@ bool inline corners_on_different_sides(int &Sx, int &Sy, double Gx, double Gy){
 	   	    ((Sx+0.5)*Gy - (Sy-0.5)*Gx) * ((Sx-0.5)*Gy - (Sy+0.5)*Gx) < 0 );
 }
 
-int p[1000000], col[1000000];
+int p[1000000], col[1000000], cR[1000000], cG[1000000], cB[1000000];
 
 int Find(int x){
 	if(p[x] == x) return x;
@@ -228,10 +234,16 @@ image gradient(const image& img, int high_threshold, int low_threshold, int supp
 	
 	int cc = 0;
 	int ile[n*m];
+	srand(time(NULL));
 	
 	for(int i = 0; i < n*m; i++){
 		ile[i] = 0;
-		if(p[i] == i) {col[i] = cc+40; cc = (cc+20)%200;}
+		if(p[i] == i) {
+			col[i] = cc+40; cc = (cc+20)%200;
+			cR[i] = rand()%256;
+			cB[i] = rand()%256;
+			cG[i] = rand()%256;
+		}
 	}
 	std::vector<std::pair<int,int> >V;
 	for(int i = 0; i < n*m; i++){
@@ -240,15 +252,29 @@ image gradient(const image& img, int high_threshold, int low_threshold, int supp
 	for(int i = 0; i < n*m; i++) if(p[i]==i) V.push_back(std::make_pair(ile[i],i));
 	std::sort(V.begin(), V.end());
 	std::reverse(V.begin(), V.end());
-	for(int i = 0; i < 40 && i < V.size(); i++) printf("%d\n", V[i].first);
+	for(int i = 0; i < 40 && i < V.size(); i++) printf("%d chuj\n", V[i].first);
+	
+	image r(img), g(img), b(img);
+	
 	for(int i = 0; i < n; i++){
 		for(int j = 0; j < m; j++){
 			//out.pixel(i,j) = 0;
-			if(!supressed[i][j]) 
+			r.pixel(i,j) = 0;
+			g.pixel(i,j) = 0;
+			b.pixel(i,j) = 0;
+			if(!supressed[i][j]){
+				r.pixel(i,j) = cR[Find(i*m+j)];
+				g.pixel(i,j) = cG[Find(i*m+j)];
+				b.pixel(i,j) = cB[Find(i*m+j)];
 				if(Find(i*m+j)==V[kto].second)  out.pixel(i,j) = 255;
+			}
 				//out.pixel(i,j) = col[Find(i*m+j)];
 		}
 	}
+	printf("Exporting color image to output/edge-detection/scc.ppm\n");
+	ppm_export(r,g,b, boost::filesystem::path(
+		"../output/edge-detection/scc.ppm"));
+	
 	return out;
 	//return res;
 }
