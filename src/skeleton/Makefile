@@ -1,15 +1,16 @@
 CC=g++
 BOOST=-lboost_filesystem -lboost_system
 FLAGS=-Wall -std=c++0x $(BOOST)
+BIN=../../bin
 
-all: geometry.o graph.o skeleton_simplifier.o
+all: $(BIN)/geometry.o $(BIN)/graph.o $(BIN)/skeleton_simplifier.o
 
-geometry.o: geometry.hpp geometry.cpp
-	$(CC) -c geometry.cpp $(FLAGS) -o geometry.o
+$(BIN)/geometry.o: geometry.hpp geometry.cpp 
+	$(CC) -c geometry.cpp $(FLAGS) -o $(BIN)/geometry.o
 
-graph.o: graph.hpp graph.cpp
-	$(CC) -c graph.cpp $(FLAGS) -o graph.o
+$(BIN)/graph.o: graph.hpp graph.cpp
+	$(CC) -c graph.cpp $(FLAGS) -o $(BIN)/graph.o
 	
-skeleton_simplifier.o: skeleton_simplifier.hpp skeleton_simplifier.cpp
-	$(CC) -c skeleton_simplifier.cpp $(FLAGS) -o skeleton_simplifier.o
+$(BIN)/skeleton_simplifier.o: skeleton_simplifier.hpp skeleton_simplifier.cpp
+	$(CC) -c skeleton_simplifier.cpp $(FLAGS) -o $(BIN)/skeleton_simplifier.o
 

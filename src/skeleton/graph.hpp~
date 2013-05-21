@@ -27,5 +27,4 @@ public:
     graph();
     char * filepath;
     void load_graph(char * path);
-    int parse_num(char * num);
 };

@@ -42,7 +42,6 @@ void graph::load_graph(char * path){
                 //printf("%c", part[l]);
                 if(part[l-1] == 'd' && part[l-2] == 'i'){
                     fscanf(file, "%c", &part[l]);
-                    printf("
                     scanf("%s", num);
 		            printf("wczytalem %s\n", num);
 		            a = parse_num(num);

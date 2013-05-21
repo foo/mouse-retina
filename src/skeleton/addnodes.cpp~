@@ -1,8 +1,6 @@
 #include <cstdio>
 #include <cstring>
 #include <memory.h>
-#include <iostream>
-#include <cstdlib>
 
 int n, m, a ,b, c, q,w,r,t;
 double x,y,z;

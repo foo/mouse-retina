@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<things>
+  <parameters>
+    <experiment name="070317_e1088"/>
+    <lastsavedin version="3.4"/>
+    <createdin version="3.4"/>
+    <scale x="22.000000" y="22.000000" z="30.000000"/>
+    <offset x="0" y="0" z="0"/>
+    <time ms="1348035438"/>
+    <activeNode id="5"/>
+    <editPosition x="824" y="1066" z="935"/>
+    <skeletonVPState E0="0.866025" E1="0.286788" E2="0.409576" E3="0.000000" E4="-0.500000" E5="0.496732" E6="0.709406" E7="0.000000" E8="0.000000" E9="0.819152" E10="-0.573576" E11="0.000000" E12="2048.000000" E13="2048.000000" E14="-2048.000000" E15="1.000000" translateX="-209.825302" translateY="-71.239342"/>
+    <vpSettingsZoom XYPlane="1.000000" XZPlane="1.000000" YZPlane="1.000000" SkelVP="0.441399"/>
+    <idleTime ms="1347211869"/>
+  </parameters>
+  <thing id="1" color.r="-1.000000" color.g="-1.000000" color.b="-1.000000" color.a="1.000000" comment="">
+    <nodes>        <node id="1" radius="10.000" x="100.000000" y="300.000000" z="200.000000" inVp="2" inMag="1" time="120383"/>
+        <node id="2" radius="10.000" x="700.000000" y="900.000000" z="560.000000" inVp="2" inMag="1" time="120886"/>
+        <node id="3" radius="10.000" x="500.000000" y="18.000000" z="444.000000" inVp="2" inMag="1" time="120777"/>
+        <node id="4" radius="10.000" x="100.000000" y="646.000000" z="333.000000" inVp="2" inMag="1" time="120915"/>
+</nodes>
+<edges>
+        <edge source="1" target="2"/>
+        <edge source="2" target="3"/>
+        <edge source="2" target="4"/>
+        <edge source="3" target="4"/>
+        <edge source="1" target="3"/>
+        <edge source="1" target="4"/>
+</edges>
+  </thing>
+  <comments>
+    <comment node="1" content="First Node"/>
+  </comments>
+  <branchpoints>
+    <branchpoint id="1"/>
+  </branchpoints>
+</things>
