@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cassert>
+#include <boost/filesystem.hpp>
+#include <boost/program_options.hpp>
 
 #include "../dataset/cube.hpp"
 #include "../dataset/dataset.hpp"

@@ -2,6 +2,8 @@
 #include <cassert>
 #include <string>
 #include <sstream>
+#include <boost/filesystem.hpp>
+#include <boost/program_options.hpp>
 
 #include "../dataset/dataset.hpp"
 #include "../dataset/cross-section.hpp"
