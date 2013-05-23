@@ -1,8 +1,8 @@
 #include "knossos-config.hpp"
 
-knossos_config::knossos_config(const char* const directory)
+knossos_config::knossos_config(const std::string& directory)
 {
-  std::ifstream conf(std::string(directory) + "/knossos.conf");
+  std::ifstream conf(directory + "/knossos.conf");
   parse_file(conf);
 }
 
