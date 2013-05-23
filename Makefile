@@ -36,7 +36,7 @@ build-filters: build-dataset build-image
 build-filters-client: build-filters
 	cd src/filters-client && make
 
-run-filters-client: clean-filters-pgm
+run-filters-client: clean-filters-client-pgm
 	cd bin/ && ./filters-client
 
 build-image:
@@ -45,7 +45,7 @@ build-image:
 build-image-client: build-dataset build-image build-config
 	cd src/image-client && make
 
-run-image-client:
+run-image-client: clean-image-client-pgm
 	cd bin && ./image-client
 
 build-clients: build-dataset-client build-image-client build-filters-client
@@ -62,5 +62,5 @@ clean-image-client-pgm:
 video:
 	cd output/image-client && ffmpeg -i slice%d.pgm video.avi
 
-clean-filters-pgm:
-	rm -f output/filters/*.pgm
+clean-filters-client-pgm:
+	rm -f output/filters-client/*.pgm
