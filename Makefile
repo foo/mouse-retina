@@ -12,8 +12,14 @@ clean-small-dataset:
 clean-large-dataset:
 	rm -rf images/e1088_mag1_large.zip images/e1088_mag1_large
 
-build-dataset: build-image
-	cd src/dataset && make
+build-config:
+	cd src/config && make
+
+build-config-client: build-config
+	cd src/config-client && make
+
+run-config-client:
+	cd bin/ && ./config-client
 
 build-dataset-client: build-dataset
 	cd src/dataset-client && make

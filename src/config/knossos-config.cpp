@@ -1,12 +1,12 @@
-#include "config.hpp"
+#include "knossos-config.hpp"
 
-config::config(const char* const directory)
+knossos_config::knossos_config(const char* const directory)
 {
   std::ifstream conf(std::string(directory) + "/knossos.conf");
   parse_file(conf);
 }
 
-void config::parse_file(std::ifstream& in)
+void knossos_config::parse_file(std::ifstream& in)
 {
   std::string line;
   while(std::getline(in, line))
@@ -45,7 +45,7 @@ void config::parse_file(std::ifstream& in)
   }
 }
 
-void config::print_config() const
+void knossos_config::print_config() const
 {
   std::cout << "experiment name " << experiment_name << ";\n"
 	    << "scale x " << scale_x << ";\n"
@@ -58,7 +58,7 @@ void config::print_config() const
 	    << std::endl;
 }
 
-bool config::parse_experiment_var(std::istringstream& iss)
+bool knossos_config::parse_experiment_var(std::istringstream& iss)
 {
   std::string secondary_variable;
   iss >> secondary_variable;
@@ -74,7 +74,7 @@ bool config::parse_experiment_var(std::istringstream& iss)
   return iss.good();
 }
 
-bool config::parse_scale_var(std::istringstream& iss)
+bool knossos_config::parse_scale_var(std::istringstream& iss)
 {
   std::string secondary_variable;
   iss >> secondary_variable;
@@ -99,7 +99,7 @@ bool config::parse_scale_var(std::istringstream& iss)
   }
 }
 
-bool config::parse_boundary_var(std::istringstream& iss)
+bool knossos_config::parse_boundary_var(std::istringstream& iss)
 {
   std::string secondary_variable;
   iss >> secondary_variable;
@@ -122,7 +122,7 @@ bool config::parse_boundary_var(std::istringstream& iss)
     return false;
 }
 
-bool config::parse_magnification_var(std::istringstream& iss)
+bool knossos_config::parse_magnification_var(std::istringstream& iss)
 {
   iss >> magnification;
   return iss.good();
