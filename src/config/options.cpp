@@ -12,18 +12,9 @@ options::options(
   int argc, const char* const argv[])
   : desc(options_desc)
 {
-  // two helpful options that are used in every client program
-  
-  desc.add_options()
-    ("config-file,c",
-      po::value<std::string>()->default_value(
-	default_cfg_file(argv[0])),
-      "Set path for config file. You can specify the same variables in both command line arguments and config file. Variables set in command line has precedence over those set in config file.")
-
-    ("help,h",
-    "Produce this help message.");
-      
+  add_default_options(argv[0]);
   read_cmd_line_args(argc, argv);
+
   read_config_file(string_var("config-file"));
   
   if(var_present("help"))
@@ -33,9 +24,17 @@ options::options(
   }
 }
 
-std::string options::default_cfg_file(const char* const binary_name) const
+void options::add_default_options(const std::string& binary_name)
 {
-  return std::string(binary_name) + ".cfg";
+  // two helpful options that are used in every client program
+  desc.add_options()
+    ("config-file,c",
+      po::value<std::string>()->default_value(
+	binary_name + ".cfg"),
+      "Set path for config file. You can specify the same variables in both command line arguments and config file. Variables set in command line has precedence over those set in config file.")
+
+    ("help,h",
+    "Produce this help message.");
 }
 
 void options::read_cmd_line_args(int argc, const char* const argv[])
@@ -44,9 +43,17 @@ void options::read_cmd_line_args(int argc, const char* const argv[])
   po::notify(vars);
 }
 
-void options::read_config_file(const std::string& filename)
+void options::read_config_file(const std::string& settings_filename)
 {
-
+  std::ifstream settings_file(settings_filename);
+  if(!settings_file.is_open())
+  {
+    std::cerr
+      << "Warning: loading configuration file <" << settings_filename
+      << " failed. File does not exists."
+      << std::endl;
+  }
+  po::store(po::parse_config_file(settings_file, desc), vars);
 }
 
 int options::int_var(const std::string& var) const

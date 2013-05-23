@@ -20,7 +20,7 @@ private:
   boost::program_options::options_description desc;
   boost::program_options::variables_map vars;
 
-  std::string default_cfg_file(const char* const) const;
+  void add_default_options(const std::string& binary_name);
 
   void read_cmd_line_args(int argc, const char* const argv[]);
   void read_config_file(const std::string& filename);
