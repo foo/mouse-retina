@@ -3,14 +3,23 @@
 
 #include "../dataset/cube.hpp"
 #include "../dataset/dataset.hpp"
-#include "../dataset/config.hpp"
+#include "../config/options.hpp"
+
+namespace po = boost::program_options;
 
 int main(int argc, char* argv[])
 {
-  const char* const dataset_dir = "../images/e1088_mag1_small";
-  config c(dataset_dir);
-  c.print_config();
-  dataset d(dataset_dir);
+  
+  po::options_description opt_desc("Image client reads cubes from dataset, and renders serie of images through the dataset.");
+
+  opt_desc.add_options()
+    ("dataset-path,d",
+      po::value<std::string>()->default_value("../images/e1088_mag1_small"),
+      "Specify path to dataset in Knossos format.");
+  
+  options opts(opt_desc, argc, argv);
+    
+  dataset d(opts.string_var("dataset-path"));
 
   std::cerr << "min x: " << d.min_x << '\n'
 	    << "max x: " << d.max_x << '\n'
