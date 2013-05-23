@@ -8,7 +8,7 @@ namespace po = boost::program_options;
 
 int main(int argc, char* argv[])
 {
-  po::options_description opt_desc("Available options");
+  po::options_description opt_desc("Config file client reads knossos config file in dataset that is specified by either command line or config file. Avaliable options");
 
   opt_desc.add_options()
     ("dataset-path,d",
