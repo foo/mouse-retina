@@ -9,8 +9,7 @@ namespace po = boost::program_options;
 
 int main(int argc, char* argv[])
 {
-  
-  po::options_description opt_desc("Image client reads cubes from dataset, and renders serie of images through the dataset.");
+  po::options_description opt_desc("Dataset client is an example of cube caching system usage.");
 
   opt_desc.add_options()
     ("dataset-path,d",
