@@ -1,5 +1,5 @@
 MODULE=dataset-module
-SUBMODULES=cube dataset config dataset_files coord cross-section
+SUBMODULES=cube dataset dataset_files coord cross-section
 
 CC=g++
 BOOST=-lboost_filesystem -lboost_system
