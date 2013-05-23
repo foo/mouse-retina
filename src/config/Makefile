@@ -1,5 +1,5 @@
 MODULE=config-module
-SUBMODULES=knossos-config
+SUBMODULES=knossos-config options
 
 CC=g++
 BOOST=-lboost_filesystem -lboost_system
