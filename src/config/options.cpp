@@ -50,7 +50,7 @@ void options::read_config_file(const std::string& settings_filename)
   {
     std::cerr
       << "Warning: loading configuration file <" << settings_filename
-      << " failed. File does not exists."
+      << "> failed. File does not exists. This is not a big deal if you have sane defaults or you specify enough parameters in command line."
       << std::endl;
   }
   po::store(po::parse_config_file(settings_file, desc), vars);
