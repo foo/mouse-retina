@@ -1,6 +1,6 @@
 #include "dataset.hpp"
 
-dataset::dataset(const char* const dataset_dir)
+dataset::dataset(const std::string& dataset_dir)
   : ds_files(dataset_dir),
     min_x(ds_files.min_x), max_x(ds_files.max_x),
     min_y(ds_files.min_y), max_y(ds_files.max_y),

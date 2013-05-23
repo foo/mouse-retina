@@ -1,6 +1,6 @@
 #include "dataset_files.hpp"
 
-dataset_files::dataset_files(const char* const dataset_dir)
+dataset_files::dataset_files(const std::string& dataset_dir)
 {
   populate_cube_files(dataset_dir);
 
@@ -54,7 +54,7 @@ void dataset_files::print_cube_files()
   }
 }
 
-void dataset_files::populate_cube_files(const char* const dataset_dir)
+void dataset_files::populate_cube_files(const std::string& dataset_dir)
 {
   namespace fs = boost::filesystem;
   fs::path dataset_root(dataset_dir);

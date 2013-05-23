@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <algorithm>
+#include <string>
 #include <boost/filesystem.hpp>
 
 #include "cube.hpp"
@@ -16,7 +17,7 @@ private:
   dataset_files ds_files;
   std::map<coord, cube> cube_cache;
 public:
-  dataset(const char* const dataset_dir);
+  dataset(const std::string& dataset_dir);
   int cube_cache_size() const;
   const cube& get_cube(const coord& c);
   const cube& get_cube(int x, int y, int z) { return get_cube(coord(x, y, z)); }
