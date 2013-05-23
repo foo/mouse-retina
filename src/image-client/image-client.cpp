@@ -46,8 +46,7 @@ int main(int argc, char* argv[])
 
   options opts(opt_desc, argc, argv);
   
-  const char* const dataset_dir = "../images/e1088_mag1_large";
-  dataset d(dataset_dir);
+  dataset d(opts.string_var("dataset-path"));
 
   for(int z = opts.int_var("z-begin");
       z < opts.int_var("z-end");
