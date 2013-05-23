@@ -15,13 +15,13 @@ options::options(
   // two helpful options that are used in every client program
   
   desc.add_options()
-    ("help,h",
-    "Produce this help message.")
-    
     ("config-file,c",
       po::value<std::string>()->default_value(
 	default_cfg_file(argv[0])),
-      "Set path for config file. You can specify the same variables in both command line arguments and config file. Variables set in command line has precedence over those set in config file.");
+      "Set path for config file. You can specify the same variables in both command line arguments and config file. Variables set in command line has precedence over those set in config file.")
+
+    ("help,h",
+    "Produce this help message.");
       
   read_cmd_line_args(argc, argv);
   read_config_file(string_var("config-file"));
