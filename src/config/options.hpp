@@ -15,6 +15,7 @@ public:
     const char* const argv[]);
 
   int int_var(const std::string& var) const;
+  float float_var(const std::string& var) const;
   std::string string_var(const std::string& var) const;
 private:
   boost::program_options::options_description desc;

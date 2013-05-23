@@ -56,6 +56,12 @@ void options::read_config_file(const std::string& settings_filename)
   po::store(po::parse_config_file(settings_file, desc), vars);
 }
 
+float options::float_var(const std::string& var) const
+{
+  check_presence(var);
+  return vars[var].as<float>();
+}
+
 int options::int_var(const std::string& var) const
 {
   check_presence(var);
@@ -72,7 +78,6 @@ bool options::var_present(const std::string& var) const
 {
   return vars.count(var) != 0;
 }
-
 
 void options::check_presence(const std::string& var) const
 {
