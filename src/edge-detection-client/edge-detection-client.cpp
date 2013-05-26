@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 
   std::cerr << "Obtaining image from grid." << std::endl;
   //image i = cross_section(d, 10, 300, 10, 300, 100);
-  image i = cross_section(d, 50, 320, 50, 320, 120);
+  image i = cross_section_z(d, 50, 320, 50, 320, 120);
 	
   {
     std::cerr

@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
   dataset d(opts.string_var("dataset-path"));
 
   std::cerr << "Obtaining image from grid." << std::endl;
-  image i = cross_section(d,
+  image i = cross_section_z(d,
     opts.int_var("cross-section-x1"),
     opts.int_var("cross-section-x2"),
     opts.int_var("cross-section-y1"),

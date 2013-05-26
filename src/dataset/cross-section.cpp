@@ -49,7 +49,7 @@ void copy_row(dataset& g, int x1, int x2, int y, int z,
     img_iter);
 }
 
-image cross_section(dataset& g, int x1, int x2, int y1, int y2, int z)
+image cross_section_z(dataset& g, int x1, int x2, int y1, int y2, int z)
 {
   assert(x1 >= 0);
   assert(y1 >= 0);
