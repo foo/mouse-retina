@@ -12,7 +12,7 @@ Program was developed on Ubuntu 12.04, installing following packages should be e
  $ apt-get install g++-4.6 make libboost-program-options1.46-dev
 
  libboost-filesystem1.46-dev libboost-mpi1.46-dev ffmpeg openmpi-bin
-<code>
+</code>
 
 Video of going through tissue
 ==
