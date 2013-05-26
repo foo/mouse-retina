@@ -21,6 +21,8 @@ public:
   int cube_cache_size() const;
   const cube& get_cube(const coord& c);
   const cube& get_cube(int x, int y, int z) { return get_cube(coord(x, y, z)); }
+  unsigned char voxel(int x, int y, int z);
+  float interpolate_voxel(float x, float y, float z);
   void unload_from_cache(const coord& c);
   void unload_z_higher_than(int z_limit);
   void unload_z_lower_than(int z_limit);
