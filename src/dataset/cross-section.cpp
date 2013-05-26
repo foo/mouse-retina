@@ -78,3 +78,31 @@ image cross_section_z(dataset& g, int x1, int x2, int y1, int y2, int z)
 
   return i;
 }
+
+image cross_section_arbitrary(
+			      dataset& d, int w, int h,
+			      float left_down_corner_x,
+			      float left_down_corner_y,
+			      float left_down_corner_z,
+			      float w_vec_x,
+			      float w_vec_y,
+			      float w_vec_z,
+			      float h_vec_x,
+			      float h_vec_y,
+			      float h_vec_z)
+{
+  image i;
+  i.allocate(w, h);
+  
+  for(int img_x = 0; img_x < w; ++img_x)
+    for(int img_y = 0; img_y < h; ++img_y)
+      {
+	const float dataset_x = left_down_corner_x + img_x * w_vec_x + img_y * h_vec_x;
+	const float dataset_y = left_down_corner_y + img_x * w_vec_y + img_y * h_vec_y;
+	const float dataset_z = left_down_corner_z + img_x * w_vec_z + img_y * h_vec_z;
+	
+	i.pixel(img_x, img_y) = d.interpolate_voxel(dataset_x, dataset_y, dataset_z);
+      }
+
+  return i;
+}
