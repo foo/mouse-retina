@@ -12,6 +12,15 @@ clean-small-dataset:
 clean-large-dataset:
 	rm -rf images/e1088_mag1_large.zip images/e1088_mag1_large
 
+build-traverser:
+	cd src/traverser && make
+
+build-traverser-client: build-traverser
+	cd src/traverser-client && make
+
+run-traverser-client:
+	cd bin/ && mpirun -n 2 ./traverser-client
+
 build-config:
 	cd src/config && make
 
