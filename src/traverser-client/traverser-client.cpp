@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cassert>
-#include <mpi.h>
+#include <boost/mpi/environment.hpp>
+#include <boost/mpi/communicator.hpp>
+namespace mpi = boost::mpi;
 
 #include "../config/options.hpp"
 
@@ -11,7 +13,8 @@ namespace po = boost::program_options;
 
 int main(int argc, char* argv[])
 {
-  MPI_Init(&argc, &argv);
+  mpi::environment env(argc, argv);
+  mpi::communicator world;
   
   po::options_description opt_desc("Traverser client");
 
@@ -22,17 +25,9 @@ int main(int argc, char* argv[])
 
   options opts(opt_desc, argc, argv);
   
-  int rank;
-  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-
-  int comm_size;
-  MPI_Comm_size(MPI_COMM_WORLD, &comm_size);
-
-  std::cout << "Process rank: " << rank << '\n'
-	    << "Communicator size: " << comm_size << std::endl;
-  
-  MPI_Finalize();
- 
+  std::cout << "Process rank: " << world.rank() << '\n'
+	    << "Communicator size: " << world.size() << std::endl;
+   
   return 0;
 }
 
