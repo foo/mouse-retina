@@ -10,7 +10,9 @@ Program was developed on Ubuntu 12.04, installing following packages should be e
 
 <code>
  $ apt-get install g++-4.6 make libboost-program-options1.46-dev
+</code>
 
+<code>
  libboost-filesystem1.46-dev libboost-mpi1.46-dev ffmpeg openmpi-bin
 </code>
 
