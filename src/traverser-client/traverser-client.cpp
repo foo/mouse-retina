@@ -30,7 +30,9 @@ int main(int argc, char* argv[])
 
   std::cout << "Process rank: " << rank << '\n'
 	    << "Communicator size: " << comm_size << std::endl;
-
+  
+  MPI_Finalize();
+ 
   return 0;
 }
 
