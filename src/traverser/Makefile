@@ -1,8 +1,8 @@
-MODULE=edge-detection-module
-SUBMODULES=gradient detector matcher
+MODULE=traverser-module
+SUBMODULES=worker manager
 
-CC=g++
-BOOST=-lboost_filesystem -lboost_system
+CC=mpic++
+BOOST=-lboost_filesystem -lboost_system -lboost_mpi -lboost_serialization
 FLAGS=-Wall -std=c++0x $(BOOST)
 BIN=../../bin
 

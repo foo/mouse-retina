@@ -12,7 +12,25 @@ clean-small-dataset:
 clean-large-dataset:
 	rm -rf images/e1088_mag1_large.zip images/e1088_mag1_large
 
-build-dataset: build-image
+build-traverser:
+	cd src/traverser && make
+
+build-traverser-client: build-traverser
+	cd src/traverser-client && make
+
+run-traverser-client:
+	cd bin/ && mpirun -n 2 ./traverser-client
+
+build-config:
+	cd src/config && make
+
+build-config-client: build-config
+	cd src/config-client && make
+
+run-config-client:
+	cd bin/ && ./config-client
+
+build-dataset: build-config
 	cd src/dataset && make
 
 build-dataset-client: build-dataset
@@ -36,16 +54,16 @@ build-filters: build-dataset build-image
 build-filters-client: build-filters
 	cd src/filters-client && make
 
-run-filters-client: clean-filters-pgm
+run-filters-client: clean-filters-client-pgm
 	cd bin/ && ./filters-client
 
 build-image:
 	cd src/image && make
 
-build-image-client: build-dataset build-image
+build-image-client: build-dataset build-image build-config
 	cd src/image-client && make
 
-run-image-client:
+run-image-client: clean-image-client-pgm
 	cd bin && ./image-client
 
 build-clients: build-dataset-client build-image-client build-filters-client
@@ -56,14 +74,19 @@ clean-bin:
 	cd src/dataset && make clean
 	cd src/filters && make clean
 
-clean-video-pgm:
-	rm -f output/video/*.pgm
+clean-image-client-pgm:
+	rm -f output/image-client/*.pgm
 
 video:
-	cd output/video && ffmpeg -i slice%d.pgm video.avi
+	cd output/image-client && ffmpeg -i slice%d.pgm video.avi
 
+<<<<<<< HEAD
 clean-edge-detection:
 	rm -f output/edge-detection/*
 	
 clean-filters-pgm:
 	rm -f output/filters/*.pgm
+=======
+clean-filters-client-pgm:
+	rm -f output/filters-client/*.pgm
+>>>>>>> FETCH_HEAD

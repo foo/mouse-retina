@@ -3,8 +3,9 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <string>
 
-class config
+class knossos_config
 {
 private:
   void parse_file(std::ifstream& in);
@@ -13,7 +14,7 @@ private:
   bool parse_boundary_var(std::istringstream& iss);
   bool parse_magnification_var(std::istringstream& iss);
 public:
-  config(const char* const directory);
+  knossos_config(const std::string& directory);
   void print_config() const;
   std::string experiment_name;
   float scale_x;

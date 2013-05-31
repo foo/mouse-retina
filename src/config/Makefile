@@ -1,5 +1,5 @@
-MODULE=edge-detection-module
-SUBMODULES=gradient detector matcher
+MODULE=config-module
+SUBMODULES=knossos-config options
 
 CC=g++
 BOOST=-lboost_filesystem -lboost_system

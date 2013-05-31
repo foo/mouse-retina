@@ -12,6 +12,34 @@ image::image(const image& i)
 
 }
 
+image image::twice_larger(){
+	image j;
+	j.allocate(width()*2, height()*2);
+	for(int x = 0; x < width(); x++)
+		for(int y = 0; y < height(); y++){
+			int v = pixel(x,y);
+			j.pixel(2*x,2*y) = v;
+			j.pixel(2*x+1,2*y) = v;
+			j.pixel(2*x,2*y+1) = v;
+			j.pixel(2*x+1,2*y+1) = v;
+		}
+	
+	return j;
+}
+
+image image::twice_smaller(){
+	image j;
+	j.allocate(width()/2, height()/2);
+	for(int x = 0; x < j.width(); x++)
+		for(int y = 0; y < j.height(); y++){
+			j.pixel(x,y) = (pixel(2*x,2*y) + pixel(2*x+1,2*y) 
+						  + pixel(2*x,2*y+1) + pixel(2*x+1,2*y+1))/4;
+		}
+	
+	return j;
+}
+
+
 void image::allocate(int width, int height)
 {
   assert(width > 0);

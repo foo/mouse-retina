@@ -11,6 +11,10 @@ point geometry::cross_product(point P, point Q){
     R.z = P.x*Q.y - P.y*Q.x;
     return R;
 }
+
+double geometry::cross_val2d(point P, point Q){
+    return P.x*Q.y - P.y*Q.x;
+}
     
 double geometry::cross_val(point P, point Q){
     return P.y*Q.z - P.z*Q.y + P.z*Q.x - P.x*Q.z + P.x*Q.y - P.y*Q.x;

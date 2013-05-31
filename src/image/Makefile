@@ -1,5 +1,5 @@
 MODULE=image-module
-SUBMODULES=binary-operations image pgm-export ppm-export
+SUBMODULES=binary-operations image pgm-export
 
 CC=g++
 BOOST=-lboost_filesystem -lboost_system

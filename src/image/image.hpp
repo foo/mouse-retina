@@ -20,4 +20,6 @@ public:
   bool initialized() const { return w != -1; }
   std::vector<unsigned char> data;
   bool is_inside(int x, int y) const;
+  image twice_larger();
+  image twice_smaller();
 };

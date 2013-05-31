@@ -21,9 +21,9 @@ int main(int argc, char* argv[])
   dataset d(dataset_dir);
 
   std::cerr << "Obtaining image from grid." << std::endl;
-  image i = cross_section(d, 10, 300, 10, 300, 100);
-  //image i = cross_section(d, 10, 350, 10, 350, 120);
-
+  
+  //image i = cross_section(d, 10, 300, 10, 300, 100);
+  image i = cross_section_z(d, 50, 320, 50, 320, 120);
   gaussian(i,0.8408964);
   
   {

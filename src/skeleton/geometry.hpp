@@ -26,6 +26,7 @@ class geometry{
 public:
     double STR_PARAM;
     point cross_product(point P, point Q);
+    double cross_val2d(point P, point Q);
     double cross_val(point P, point Q);
     double cross_val(point P, point Q, point R);
     double cross_angle(point P, point Q);
