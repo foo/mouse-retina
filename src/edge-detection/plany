@@ -1,0 +1,16 @@
+zmienić union na patrzenie na sam gradient, niekoniecznie kierunek?
+wrócić do mniejszych obrazków?
+większe rozmycie
+
+fragmenty "niepewne" wycinamy i pomniejszamy + na nowo edge detection
+różne stopnie rozmycia?
+
+duże rozmycie - duże progi
+ulepszyć unię po kątach
+
+TODO
+1. Ładnie kod pozmieniać, funkcje itp. czysto elegancko
+2. Repozytorium
+3. Dokończyć matching + wykrywanie
+4. Łączenie warstw
+5. ^ do powyższych zapoznać się z boostem

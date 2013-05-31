@@ -80,13 +80,11 @@ clean-image-client-pgm:
 video:
 	cd output/image-client && ffmpeg -i slice%d.pgm video.avi
 
-<<<<<<< HEAD
 clean-edge-detection:
 	rm -f output/edge-detection/*
 	
 clean-filters-pgm:
 	rm -f output/filters/*.pgm
-=======
+	
 clean-filters-client-pgm:
 	rm -f output/filters-client/*.pgm
->>>>>>> FETCH_HEAD
