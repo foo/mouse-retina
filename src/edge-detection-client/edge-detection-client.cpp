@@ -21,9 +21,11 @@ int main(int argc, char* argv[])
   dataset d(dataset_dir);
 
   std::cerr << "Obtaining image from grid." << std::endl;
-  //image i = cross_section(d, 10, 300, 10, 300, 100);
-  image i = cross_section(d, 50, 320, 50, 320, 120);
-	
+  image i = cross_section(d, 10, 300, 10, 300, 100);
+  //image i = cross_section(d, 10, 350, 10, 350, 120);
+
+  gaussian(i,0.8408964);
+  
   {
     std::cerr
       << "Exporting original image to output/edge-detection/original.pgm."
@@ -40,17 +42,35 @@ int main(int argc, char* argv[])
     std::cerr
       << "Edge detection."
       << std::endl;
-	for(int supp_radius = 1; supp_radius <= 1; supp_radius++)
-    for(int thigh = 190; thigh <= 220; thigh += 100)
-    for(int which = 0; which < 20; which+=1)
-    for(int tlow = 40; tlow < thigh; tlow += 1000)
+      
+    FILE * params = fopen("../src/edge-detection/params.conf", "r");  
+    char name[20]={0}; 
+	int sup_rad1, sup_rad2;
+	int thresh_high1, thresh_high2;
+	int thresh_diff1, thresh_diff2;
+	
+	while(fscanf(params, "%s", name)!=EOF){
+		if(strcmp(name,"sup_rad1")==0) fscanf(params,"%d", &sup_rad1);
+		if(strcmp(name,"sup_rad2")==0) fscanf(params,"%d", &sup_rad2);
+		if(strcmp(name,"thresh_high1")==0) fscanf(params,"%d", &thresh_high1);
+		if(strcmp(name,"thresh_high2")==0) fscanf(params,"%d", &thresh_high2);
+		if(strcmp(name,"thresh_diff1")==0) fscanf(params,"%d", &thresh_diff1);
+		if(strcmp(name,"thresh_diff2")==0) fscanf(params,"%d", &thresh_diff2);
+	}
+	fclose(params);
+	
+	for(int supp_radius = sup_rad1; supp_radius <= sup_rad2; supp_radius++)
+    for(int thigh = thresh_high1; thigh <= thresh_high2; thigh += 10)
+    //for(int which = 0; which < 20; which+=100)
+    for(int tlow = thigh-thresh_diff1; tlow <= thigh-thresh_diff2; tlow += 10)
     {
       image i_edge_detection =
-      gradient(
+      gradient(i,thigh,tlow,supp_radius,0);
+      /*gradient(
 			//sobel(
 			  sharpen(
 			gaussian5x5(i)),
-		 thigh, tlow, supp_radius, which);
+		 thigh, tlow, supp_radius, which);*/
   		/*
       image i_edge_detection_with_dilation =
       gradient(
@@ -60,9 +80,10 @@ int main(int argc, char* argv[])
 			  sharpen(
 				gaussian5x5(i))))), threshold_value);
 		*/
+		
       {
 	std::stringstream ss;
-	ss << "../output/edge-detection/edge_detection" << thigh << "_"<< tlow << "_" << supp_radius<<"_" << which <<".pgm";
+	ss << "../output/edge-detection/edge_detection" << thigh << "_"<< tlow << "_" << supp_radius<<"_" << 0 <<".pgm";
       
 	std::cerr	<< "Exporting image to " << ss.str() << std::endl;
 	pgm_export(i_edge_detection, boost::filesystem::path(ss.str()));
