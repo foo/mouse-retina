@@ -21,6 +21,15 @@ build-dataset-client: build-dataset
 run-dataset-client:
 	cd bin/ && ./dataset-client
 
+build-edge-detection: build-filters
+	cd src/edge-detection && make -B
+
+build-edge-detection-client: build-edge-detection
+	cd src/edge-detection-client && make
+
+run-edge-detection-client: clean-edge-detection
+	cd bin/ && ./edge-detection-client
+	
 build-filters: build-dataset build-image
 	cd src/filters && make
 
@@ -53,5 +62,8 @@ clean-video-pgm:
 video:
 	cd output/video && ffmpeg -i slice%d.pgm video.avi
 
+clean-edge-detection:
+	rm -f output/edge-detection/*
+	
 clean-filters-pgm:
 	rm -f output/filters/*.pgm
