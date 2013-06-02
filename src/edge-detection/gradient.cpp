@@ -27,7 +27,7 @@ bool inline corners_on_different_sides(int &Sx, int &Sy, double Gx, double Gy){
           ((Sx+0.5)*Gy - (Sy-0.5)*Gx) * ((Sx-0.5)*Gy - (Sy+0.5)*Gx) < 0 );
 }
 
-int p[1000000], col[1000000];
+int p[1000000];
 
 int Find(int x){
   if(p[x] == x) return x;
@@ -205,7 +205,7 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
     fy = i%m;
     if(!supressed[fx][fy] && p[i] == i) {
       if(print_color){
-        col[i] = cc+40; cc = (cc+20)%200;
+        cc = (cc+20)%200;
         r.pixel(fx,fy) = rand()%256;
         g.pixel(fx,fy) = rand()%256;
         b.pixel(fx,fy) = rand()%256;
