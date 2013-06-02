@@ -37,9 +37,10 @@ struct union_find
     return p[x];
   }
 
-  void Union(int x, int y){
-    if(Find(x) == Find(y)) return;
+  bool Union(int x, int y){
+    if(Find(x) == Find(y)) return false;
     p[p[x]] = p[y];
+    return true;
   }
 };
 
@@ -184,8 +185,8 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
             if(clos(gradients[i][j].angle,gradients[I][J].angle,ep3)){
               if(det_unionfind.Union(i*m+j, I*m+J))
 		{
-	        detector.G[x].push_back(y);
-		detector.G[y].push_back(x);
+	        detector.G[i*m+j].push_back(I*m+J);
+		detector.G[I*m+J].push_back(i*m+j);
 		}
             }
           }
