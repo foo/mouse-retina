@@ -14,11 +14,13 @@
 #define PI (2*acos(0))
 
 class Gradient{
-	int x, y; 
-	double angle, mag;
-	Gradient(int x_, int y_, double ang_, double mag_);
+  int x, y;
+  double angle, mag;
+  Gradient(int x_, int y_, double ang_, double mag_);
 };
-//vector<Gradient> gradient(const image& i);
-image gradient(const image& i, int high_threshold, int low_threshold, int supp_radius, int kto);
+
+image gradient(const image& i, int high_threshold, int low_threshold, int supp_radius, int kto,
+               float ep1, float ep2, float ep3, float sigma, bool print_color, bool do_matching,
+               int union_ray, int thresh_ray);
 double angle_from_two(double x, double y);
 void print_compounds(std::vector<Compound>&compounds,int mode, char *path, image &r, image &g, image &b,int*compM);

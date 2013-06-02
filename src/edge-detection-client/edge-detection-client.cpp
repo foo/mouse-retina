@@ -41,27 +41,32 @@ int main(int argc, char* argv[])
     ("cross-section-z",
      po::value<int>()->default_value(120),
      "Cross section dimensions. Z coordinate of cross-section plane.")
-    ("gaussian", po::value<float>()->default_value(0.8408964), "")
+    ("gaussian_sigma", po::value<float>()->default_value(0.8408964), "")
     ("sup_rad1", po::value<int>(), "")
     ("sup_rad2", po::value<int>(), "")
     ("thresh_high1", po::value<int>(), "")
     ("thresh_high2", po::value<int>(), "")
     ("thresh_diff1", po::value<int>(), "")
-    ("thresh_diff2", po::value<int>(), "");
+    ("thresh_diff2", po::value<int>(), "")
+    ("ep1", po::value<float>(), "")
+    ("ep2", po::value<float>(), "")
+    ("ep3", po::value<float>(), "")
+    ("thresh_ray", po::value<int>(), "")
+    ("union_ray", po::value<int>(), "")
+    ("print_color", po::value<bool>(), "")
+    ("do_matching", po::value<bool>(), "")
+    ;
 
   options opts(opt_desc, argc, argv);
 
   dataset d(opts.string_var("dataset-path"));
 
-  image original = cross_section_z(d,
+  image i = cross_section_z(d,
                             opts.int_var("cross-section-x1"),
                             opts.int_var("cross-section-x2"),
                             opts.int_var("cross-section-y1"),
                             opts.int_var("cross-section-y2"),
                             opts.int_var("cross-section-z"));
-
-
-  image i = gaussian(original, opts.float_var("gaussian"));
 
   {
     std::cerr
@@ -83,7 +88,16 @@ int main(int argc, char* argv[])
         for(int tlow = thigh-thresh_diff1; tlow <= thigh-thresh_diff2; tlow += 10)
           {
             image i_edge_detection =
-              gradient(i,thigh,tlow,supp_radius,0);
+              gradient(i,thigh,tlow,supp_radius,0,
+		       opts.float_var("ep1"),
+		       opts.float_var("ep2"),
+		       opts.float_var("ep3"),
+		       opts.float_var("gaussian_sigma"),
+		       opts.bool_var("print_color"),
+		       opts.bool_var("do_matching"),
+		       opts.int_var("union_ray"),
+		       opts.int_var("thresh_ray")
+		       );
 
             {
               std::stringstream ss;
