@@ -146,7 +146,7 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
   for(int i = 0; i < n; i++){
     for(int j = 0; j < m; j++){
       if(supressed[i][j]) continue;
-      dist = 10000000.;
+      dist = INT_MAX;
       for(int x = -union_ray; x <= union_ray; x++){
         for(int y = -union_ray; y <= union_ray; y++){
           int I = i+x;
