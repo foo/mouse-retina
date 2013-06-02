@@ -15,7 +15,7 @@ clean-large-dataset:
 build-traverser:
 	cd src/traverser && make
 
-build-traverser-client: build-traverser
+build-traverser-client: build-traverser build-config
 	cd src/traverser-client && make
 
 run-traverser-client:
@@ -33,7 +33,7 @@ run-config-client:
 build-dataset: build-config
 	cd src/dataset && make
 
-build-dataset-client: build-dataset
+build-dataset-client: build-dataset build-config
 	cd src/dataset-client && make
 
 run-dataset-client:
@@ -42,16 +42,16 @@ run-dataset-client:
 build-edge-detection: build-filters
 	cd src/edge-detection && make -B
 
-build-edge-detection-client: build-edge-detection
+build-edge-detection-client: build-edge-detection build-config
 	cd src/edge-detection-client && make
 
 run-edge-detection-client: clean-edge-detection
 	cd bin/ && ./edge-detection-client
-	
+
 build-filters: build-dataset build-image
 	cd src/filters && make
 
-build-filters-client: build-filters
+build-filters-client: build-filters build-config
 	cd src/filters-client && make
 
 run-filters-client: clean-filters-client-pgm
@@ -73,6 +73,7 @@ clean-bin:
 	cd src/image && make clean
 	cd src/dataset && make clean
 	cd src/filters && make clean
+	cd src/edge-detection && make clean
 
 clean-image-client-pgm:
 	rm -f output/image-client/*.pgm
@@ -82,9 +83,9 @@ video:
 
 clean-edge-detection:
 	rm -f output/edge-detection/*
-	
+
 clean-filters-pgm:
 	rm -f output/filters/*.pgm
-	
+
 clean-filters-client-pgm:
 	rm -f output/filters-client/*.pgm
