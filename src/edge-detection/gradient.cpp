@@ -27,20 +27,23 @@ bool inline corners_on_different_sides(int &Sx, int &Sy, double Gx, double Gy){
           ((Sx+0.5)*Gy - (Sy-0.5)*Gx) * ((Sx-0.5)*Gy - (Sy+0.5)*Gx) < 0 );
 }
 
-int p[1000000];
+struct union_find
+{
+  int p[1000000];
 
-int Find(int x){
-  if(p[x] == x) return x;
-  p[x] = Find(p[x]);
-  return p[x];
-}
+  int Find(int x){
+    if(p[x] == x) return x;
+    p[x] = Find(p[x]);
+    return p[x];
+  }
 
-void Union(int x, int y, Detector &det){
-  if(Find(x) == Find(y)) return;
-  p[p[x]] = p[y];
-  det.G[x].push_back(y);
-  det.G[y].push_back(x);
-}
+  void Union(int x, int y){
+    if(Find(x) == Find(y)) return;
+    p[p[x]] = p[y];
+  }
+};
+
+union_find det_unionfind;
 
 inline int min(int a, int b){
   if(a < b) return a; return b;
@@ -154,7 +157,7 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
       }
     }
   }
-  for(int i = 0; i < n*m; i++) p[i] = i;
+  for(int i = 0; i < n*m; i++) det_unionfind.p[i] = i;
   //laczymy prostopadle
 
   Detector detector;
@@ -179,7 +182,11 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
               dist = x*x+y*y; clx=I;cly=J;
             }
             if(clos(gradients[i][j].angle,gradients[I][J].angle,ep3)){
-              Union(i*m+j, I*m+J, detector);
+              if(det_unionfind.Union(i*m+j, I*m+J))
+		{
+	        detector.G[x].push_back(y);
+		detector.G[y].push_back(x);
+		}
             }
           }
         }
@@ -203,7 +210,7 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
     ile[i] = 0;
     fx = i/m;
     fy = i%m;
-    if(!supressed[fx][fy] && p[i] == i) {
+    if(!supressed[fx][fy] && det_unionfind.p[i] == i) {
       if(print_color){
         cc = (cc+20)%200;
         r.pixel(fx,fy) = rand()%256;
@@ -225,10 +232,10 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
   std::vector<Compound>compound(scc);
   std::vector<std::pair<int,int> >V;
   for(int i = 0; i < n*m; i++){
-    ile[Find(i)]++;
+    ile[det_unionfind.Find(i)]++;
   }
 
-  for(int i = 0; i < n*m; i++) if(p[i]==i){
+  for(int i = 0; i < n*m; i++) if(det_unionfind.p[i]==i){
       V.push_back(std::make_pair(ile[i],i));
     }
   std::sort(V.begin(), V.end());
@@ -241,7 +248,7 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
   int ff;
   for(int i = 0; i < n; i++){
     for(int j = 0; j < m; j++){
-      ff = compM[Find(i*m+j)];
+      ff = compM[det_unionfind.Find(i*m+j)];
       if(ff==-1) continue;
       compound[ff].X.push_back(i);
       compound[ff].Y.push_back(j);
@@ -297,7 +304,7 @@ void print_compounds(std::vector<Compound>&compound, int mode, char *path, image
   int scc = compound.size();
 
   if(mode==0)
-    for(int i = 0; i < n*m; i++) if(p[i] == i){
+    for(int i = 0; i < n*m; i++) if(det_unionfind.p[i] == i){
         ktos = compM[i];
         fx = i/m;
         fy = i%m;
