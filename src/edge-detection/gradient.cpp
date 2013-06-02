@@ -11,10 +11,6 @@
 #include <sstream>
 #include <iomanip>
 
-Gradient::Gradient(int x_, int y_, double ang_, double mag_){
-  x = x_; y = y_; angle = ang_; mag = mag_;
-}
-
 double angle_from_two(double x, double y){
   if(iszero(x) && iszero(y)) return 0;
   return atan2(y,x);
@@ -66,7 +62,7 @@ void join(int x1,int y1,int x2,int y2,image& out, int color){
          if(out.pixel(x1,y)==0) out.pixel(x1,y) = color;
 }
 
-image gradient(const image& img1, int high_threshold, int low_threshold, int supp_radius, int kto,
+image detect_edges(const image& img1, int high_threshold, int low_threshold, int supp_radius, int kto,
                float ep1, float ep2, float ep3, float sigma, bool print_color, bool do_matching,
                int union_ray, int thresh_ray)
 {
@@ -74,7 +70,7 @@ image gradient(const image& img1, int high_threshold, int low_threshold, int sup
   int n = img1.width();
   int m = img1.height();
 
-  double LX[n][m], LY[n][m], mag[n][m], ang[n][m];
+  gradient gradients[n][m];
   int supressed[n][m];
 
   image img = gaussian(img1,sigma);
@@ -87,10 +83,10 @@ image gradient(const image& img1, int high_threshold, int low_threshold, int sup
       std::pair<float, float> gradient_vector = sobel_vector(img, i, j);
       float y = gradient_vector.first;
       float x = gradient_vector.second;
-      LX[i][j] = x;
-      LY[i][j] = y;
-      mag[i][j] = sqrt(x*x + y*y);
-      ang[i][j] = angle_from_two(y, x);
+      gradients[i][j].x = x;
+      gradients[i][j].y = y;
+      gradients[i][j].mag = sqrt(x*x + y*y);
+      gradients[i][j].angle = angle_from_two(y, x);
 
       //czy spelnione non-maximum suppression?
     }
@@ -102,22 +98,24 @@ image gradient(const image& img1, int high_threshold, int low_threshold, int sup
     for(int j = 0; j < m; j++){
       supressed[i][j] = 0;
 
-      int I,J;
+      gradient g = gradients[i][j];
       for(int x = -R; x <= R; x++){
         for(int y = -R; y <= R; y++){
-          I = i+x; J = j+y;
-          if((x==0 && y==0) || I < 0 || I >= n || J < 0 || J>=m) continue;
+          if((x==0 && y==0) || !img.is_inside(i+x, j+y))
+	    continue;
 
-          if(corners_on_different_sides(x,y,LX[i][j],LY[i][j]) ||
-             corners_on_different_sides(x,y,-LX[i][j],-LY[i][j])){
-            if(mag[I][J] > mag[i][j] && clos(ang[i][j],ang[I][J],ep1)){
+	  gradient g_translated = gradients[i+x][j+y];
+	  
+          if(corners_on_different_sides(x, y, g.x, g.y) ||
+             corners_on_different_sides(x, y, -g.x, -g.y)) {
+            if(g_translated.mag > g.mag && clos(g.angle, g_translated.angle, ep1)){
               supressed[i][j] = 1;
               break;
             }
           }
         }
       }
-      if(supressed[i][j]!=1 && mag[i][j] < high_threshold){
+      if(supressed[i][j] != 1 && g.mag < high_threshold){
         supressed[i][j] = 2;
         out.pixel(i,j) = 0;
         continue;
@@ -129,23 +127,25 @@ image gradient(const image& img1, int high_threshold, int low_threshold, int sup
 
     }
   }
-  int I,J;
-  int i,j;
-
   while(!edges.empty()){
-    i = edges.top().first;
-    j = edges.top().second;
+    int i = edges.top().first;
+    int j = edges.top().second;
     edges.pop();
+
+    gradient g = gradients[i][j];
 
     for(int x = -thresh_ray; x <= thresh_ray; x++){
       for(int y = -thresh_ray; y <= thresh_ray; y++){
-        I = i+x; J = j+y;
-        if((x==0 && y==0) || I < 0 || I >= n || J < 0 || J>=m) continue;
+        int I = i+x;
+	int J = j+y;
+        if((x==0 && y==0) || !img.is_inside(I, J)) continue;
         if(supressed[I][J]!=2) continue;
 
-        if(corners_on_different_sides(x,y,LY[i][j],-LX[i][j]) ||
-           corners_on_different_sides(x,y,-LY[i][j],LX[i][j])){
-          if(mag[I][J] > low_threshold && abs(ang[i][j]-ang[I][J]) < ep2){
+	gradient g_translated = gradients[I][J];
+
+        if(corners_on_different_sides(x, y, g.y, -g.x) ||
+           corners_on_different_sides(x, y, -g.y,g.x)){
+          if(g_translated.mag > low_threshold && abs(g.angle-g_translated.angle) < ep2){
             supressed[I][J] = 0;
             out.pixel(I,J) = 140;
             edges.push(std::make_pair(I,J));
@@ -167,17 +167,18 @@ image gradient(const image& img1, int high_threshold, int low_threshold, int sup
       dist = 10000000.;
       for(int x = -union_ray; x <= union_ray; x++){
         for(int y = -union_ray; y <= union_ray; y++){
-          I = i+x; J = j+y;
+          int I = i+x;
+	  int J = j+y;
           if((x==0 && y==0) || I < 0 || I >= n || J < 0 || J>=m) continue;
           if(supressed[I][J]) continue;
           //prostopadle
-          if(corners_on_different_sides(x,y,-LY[i][j],LX[i][j]) ||
-             corners_on_different_sides(x,y,LY[i][j],-LX[i][j])){
+          if(corners_on_different_sides(x,y,-gradients[i][j].y,gradients[i][j].x) ||
+             corners_on_different_sides(x,y,gradients[i][j].y,-gradients[i][j].x)){
 
             if(x*x+y*y < dist){
               dist = x*x+y*y; clx=I;cly=J;
             }
-            if(clos(ang[i][j],ang[I][J],ep3)){
+            if(clos(gradients[i][j].angle,gradients[I][J].angle,ep3)){
               Union(i*m+j, I*m+J, detector);
             }
           }

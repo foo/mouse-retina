@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
         for(int tlow = thigh-thresh_diff1; tlow <= thigh-thresh_diff2; tlow += 10)
           {
             image i_edge_detection =
-              gradient(i,thigh,tlow,supp_radius,0,
+              detect_edges(i,thigh,tlow,supp_radius,0,
 		       opts.float_var("ep1"),
 		       opts.float_var("ep2"),
 		       opts.float_var("ep3"),
