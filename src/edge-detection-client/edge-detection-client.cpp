@@ -41,6 +41,7 @@ int main(int argc, char* argv[])
     ("cross-section-z",
      po::value<int>()->default_value(120),
      "Cross section dimensions. Z coordinate of cross-section plane.")
+    ("gaussian", po::value<float>()->default_value(0.8408964), "")
     ("sup_rad1", po::value<int>(), "")
     ("sup_rad2", po::value<int>(), "")
     ("thresh_high1", po::value<int>(), "")
@@ -52,7 +53,7 @@ int main(int argc, char* argv[])
 
   dataset d(opts.string_var("dataset-path"));
 
-  image i = cross_section_z(d,
+  image original = cross_section_z(d,
                             opts.int_var("cross-section-x1"),
                             opts.int_var("cross-section-x2"),
                             opts.int_var("cross-section-y1"),
@@ -60,7 +61,7 @@ int main(int argc, char* argv[])
                             opts.int_var("cross-section-z"));
 
 
-  gaussian(i,0.8408964);
+  image i = gaussian(original, opts.float_var("gaussian"));
 
   {
     std::cerr
@@ -68,8 +69,6 @@ int main(int argc, char* argv[])
       << std::endl;
 
     pgm_export(i, boost::filesystem::path("../output/edge-detection/original.pgm"));
-
-    pgm_export(sharpen(i), boost::filesystem::path("../output/edge-detection/original_gauss.pgm"));
   }
 
   {
@@ -94,6 +93,7 @@ int main(int argc, char* argv[])
               pgm_export(i_edge_detection, boost::filesystem::path(ss.str()));
             }
           }
+    
   }
 
   std::cerr << "Program finished successfully." << std::endl;
