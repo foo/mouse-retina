@@ -31,14 +31,6 @@ bool inline corners_on_different_sides(int &Sx, int &Sy, double Gx, double Gy){
 
 void print_compounds(std::vector<Compound>&compound, int mode, char *path, image &r, image &g, image &b, int *compM, const union_find& det_unionfind);
 
-inline int min(int a, int b){
-  if(a < b) return a; return b;
-}
-
-inline int max(int a, int b){
-  if(a > b) return a; return b;
-}
-
 void join(int x1,int y1,int x2,int y2,image& out, int color){
   if(x1 > x2){ std::swap(x1,x2); std::swap(y1,y2);}
   if(x1 != x2){
@@ -47,7 +39,7 @@ void join(int x1,int y1,int x2,int y2,image& out, int color){
       if(out.pixel(x1+x,y)==0) out.pixel(x1+x,y) = color;
     }
   }
-  else for(int y = min(y1,y2)+1; y < max(y1,y2); y++)
+  else for(int y = std::min(y1,y2)+1; y < std::max(y1,y2); y++)
          if(out.pixel(x1,y)==0) out.pixel(x1,y) = color;
 }
 
