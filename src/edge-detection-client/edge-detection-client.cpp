@@ -13,7 +13,7 @@
 #include "../filters/sharpen.hpp"
 #include "../filters/threshold.hpp"
 #include "../filters/dilation.hpp"
-#include "../edge-detection/gradient.hpp"
+#include "../edge-detection/edge-detection.hpp"
 #include "../config/options.hpp"
 
 namespace po = boost::program_options;
