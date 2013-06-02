@@ -29,8 +29,9 @@ bool inline corners_on_different_sides(int &Sx, int &Sy, double Gx, double Gy){
 
 struct union_find
 {
+private:
   int p[1000000];
-
+public:
   int Find(int x){
     if(p[x] == x) return x;
     p[x] = Find(p[x]);
@@ -46,6 +47,16 @@ struct union_find
   bool OwnRank(int x) const
   {
     return p[x] == x;
+  }
+
+  int Parent(int x) const
+  {
+    return p[x];
+  }
+
+  void Reset()
+  {
+    for(int i = 0; i < 1000000; i++) p[i] = i;
   }
 };
 
@@ -166,7 +177,7 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
       }
     }
   }
-  for(int i = 0; i < n*m; i++) det_unionfind.p[i] = i;
+  det_unionfind.Reset();
   //laczymy prostopadle
 
   Detector detector;
@@ -219,7 +230,7 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
     ile[i] = 0;
     fx = i/m;
     fy = i%m;
-    if(!supressed[fx][fy] && det_unionfind.p[i] == i) {
+    if(!supressed[fx][fy] && det_unionfind.OwnRank(i)) {
       if(print_color){
         cc = (cc+20)%200;
         r.pixel(fx,fy) = rand()%256;
@@ -244,7 +255,7 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
     ile[det_unionfind.Find(i)]++;
   }
 
-  for(int i = 0; i < n*m; i++) if(det_unionfind.p[i]==i){
+  for(int i = 0; i < n*m; i++) if(det_unionfind.OwnRank(i)){
       V.push_back(std::make_pair(ile[i],i));
     }
   std::sort(V.begin(), V.end());
@@ -313,7 +324,7 @@ void print_compounds(std::vector<Compound>&compound, int mode, char *path, image
   int scc = compound.size();
 
   if(mode==0)
-    for(int i = 0; i < n*m; i++) if(det_unionfind.p[i] == i){
+    for(int i = 0; i < n*m; i++) if(det_unionfind.OwnRank(i)){
         ktos = compM[i];
         fx = i/m;
         fy = i%m;
