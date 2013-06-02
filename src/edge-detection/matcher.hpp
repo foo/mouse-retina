@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <cstdio>
 #include <queue>
-#include "detector.hpp"
+#include "compound.hpp"
 
 void join_by_matching(std::vector<Compound>&C);
 int** prepare_table(std::vector<Compound>&C);
