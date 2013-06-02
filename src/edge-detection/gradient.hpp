@@ -6,6 +6,7 @@
 #include <cstdio>
 
 #include "../image/image.hpp"
+#include "../filters/sobel.hpp"
 #include "detector.hpp"
 #include "matcher.hpp"
 

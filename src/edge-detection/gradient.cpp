@@ -84,28 +84,13 @@ image gradient(const image& img1, int high_threshold, int low_threshold, int sup
 
   for(int i = 1; i < n-1; i++){
     for(int j = 1; j < m-1; j++){
-
-      LX[i][j] = LY[i][j] = 0;
-
-      if(i>1 && i<n-1)
-        LX[i][j] = -2 * img.pixel(i-1,j) - img.pixel(i-1,j-1) - img.pixel(i-1,j+1)
-          +2 * img.pixel(i+1,j) + img.pixel(i+1,j-1) + img.pixel(i+1,j+1);
-
-      else if(i == 0)
-        LX[i][j] = img.pixel(i+1,j) - img.pixel(i,j);
-      else if(i == n-1)
-        LX[i][j] = img.pixel(i,j) - img.pixel(i-1,j);
-
-      if(j>1 && j<m-1)
-        LY[i][j] = -2 * img.pixel(i,j-1) - img.pixel(i-1,j-1) - img.pixel(i+1,j-1)
-          +2 * img.pixel(i,j+1) + img.pixel(i-1,j+1) + img.pixel(i+1,j+1);
-      else if(j == 0)
-        LX[i][j] = img.pixel(i,j+1) - img.pixel(i,j);
-      else if(j == m-1)
-        LX[i][j] = img.pixel(i,j) - img.pixel(i,j-1);
-
-      mag[i][j] = sqrt(LX[i][j]*LX[i][j] + LY[i][j]*LY[i][j]);
-      ang[i][j] = angle_from_two(LY[i][j], LX[i][j]);
+      std::pair<float, float> gradient_vector = sobel_vector(img, i, j);
+      float y = gradient_vector.first;
+      float x = gradient_vector.second;
+      LX[i][j] = x;
+      LY[i][j] = y;
+      mag[i][j] = sqrt(x*x + y*y);
+      ang[i][j] = angle_from_two(y, x);
 
       //czy spelnione non-maximum suppression?
     }
