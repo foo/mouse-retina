@@ -19,7 +19,7 @@ bool inline clos(double a, double b, double ep)
   return false;
 }
 
-bool inline corners_on_different_sides(int &Sx, int &Sy, double Gx, double Gy){
+bool corners_on_different_sides(int Sx, int Sy, double Gx, double Gy){
   //czy rogi kwadraciku o srodku w S sa po dwoch stronach wektora do G?
   return (((Sx+0.5)*Gy - (Sy+0.5)*Gx) * ((Sx-0.5)*Gy - (Sy-0.5)*Gx) < 0 ||
           ((Sx+0.5)*Gy - (Sy-0.5)*Gx) * ((Sx-0.5)*Gy - (Sy+0.5)*Gx) < 0 );
