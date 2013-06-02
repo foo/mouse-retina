@@ -30,7 +30,7 @@ bool inline corners_on_different_sides(int &Sx, int &Sy, double Gx, double Gy){
 struct union_find
 {
 private:
-  int p[1000000];
+  std::vector<int> p;
 public:
   int Find(int x){
     if(p[x] == x) return x;
@@ -54,9 +54,10 @@ public:
     return p[x];
   }
 
-  void Reset()
+  union_find(int sz)
   {
-    for(int i = 0; i < 1000000; i++) p[i] = i;
+    p.resize(sz);
+    for(int i = 0; i < sz; i++) p[i] = i;
   }
 };
 
@@ -91,7 +92,7 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
   int n = img1.width();
   int m = img1.height();
 
-  union_find det_unionfind;
+  union_find det_unionfind(n * m);
 
   gradient gradients[n][m];
   int supressed[n][m];
@@ -177,7 +178,6 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
       }
     }
   }
-  det_unionfind.Reset();
   //laczymy prostopadle
 
   Detector detector;
