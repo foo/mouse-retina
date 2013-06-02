@@ -76,6 +76,17 @@ int main(int argc, char* argv[])
     pgm_export(i, boost::filesystem::path("../output/edge-detection/original.pgm"));
   }
 
+  image magnified = gaussian(i, opts.float_var("gaussian_sigma"));
+
+  {
+    std::cerr
+      << "Exporting magnified image to output/edge-detection/magnified.pgm."
+      << std::endl;
+
+    pgm_export(magnified, boost::filesystem::path("../output/edge-detection/magnified.pgm"));
+  }
+  
+
   {
     int sup_rad1 = opts.int_var("sup_rad1");
     int sup_rad2 = opts.int_var("sup_rad2");
@@ -91,11 +102,10 @@ int main(int argc, char* argv[])
 	    rgb_image i_before_join;
 	    rgb_image i_after_join;
 	    std::tie(i_edge_detection, i_before_join, i_after_join)
-	      = detect_edges(i,thigh,tlow,supp_radius,0,
+	      = detect_edges(magnified,thigh,tlow,supp_radius,0,
 		       opts.float_var("ep1"),
 		       opts.float_var("ep2"),
 		       opts.float_var("ep3"),
-		       opts.float_var("gaussian_sigma"),
 		       opts.bool_var("print_color"),
 		       opts.bool_var("do_matching"),
 		       opts.int_var("union_ray"),

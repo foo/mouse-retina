@@ -32,23 +32,18 @@ void join(int x1,int y1,int x2,int y2,image& out, int color){
 }
 
 std::tuple<image, rgb_image, rgb_image>
-detect_edges(const image& img1, int high_threshold, int low_threshold, int supp_radius, int kto,
-             float ep1, float ep2, float ep3, float sigma, bool print_color, bool do_matching,
+detect_edges(const image& img, int high_threshold, int low_threshold, int supp_radius, int kto,
+             float ep1, float ep2, float ep3, bool print_color, bool do_matching,
              int union_ray, int thresh_ray)
 {
   int R = supp_radius;
-  int n = img1.width();
-  int m = img1.height();
+  int n = img.width();
+  int m = img.height();
 
   union_find det_unionfind(n * m);
 
   gradient gradients[n][m];
   int supressed[n][m];
-
-  image img = gaussian(img1,sigma);
-  const char *pp = "../output/edge-detection/magnified.pgm";
-  if(!exists(boost::filesystem::path(pp)))
-    pgm_export(img, boost::filesystem::path(pp));
 
   for(int i = 1; i < n-1; i++){
     for(int j = 1; j < m-1; j++){
