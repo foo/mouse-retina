@@ -11,10 +11,10 @@ box_filter::box_filter(const std::vector<int>& filter_data)
   assert(dim*dim == filter_data.size());
 }
 
-int box_filter::apply_to_pixel(const image& i, int cx, int cy) const
+float box_filter::apply_to_pixel_no_rounding(const image& i, int cx, int cy) const
 {
-  int sum = 0;
-  int denom = 0;
+  float sum = 0;
+  float denom = 0;
 
   const int offset = (dim - 1) / 2;
 
@@ -34,17 +34,19 @@ int box_filter::apply_to_pixel(const image& i, int cx, int cy) const
       }
     }
 
-  int result;
-  
   if(denom != 0)
-    result = sum / denom;
+    return sum / denom;
   else
-    result = sum;
+    return sum;
+}
 
-  if(result < 0) result = 0;
-  if(result > 255) result = 255;
+int box_filter::apply_to_pixel(const image& i, int cx, int cy) const
+{
+  float result = apply_to_pixel_no_rounding(i, cx, cy);
+  if(result < 0) return 0;
+  if(result > 255) return 255;
 
-  return result;
+  return static_cast<int>(result);
 }
 
 int box_filter::element(int x, int y) const

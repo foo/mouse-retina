@@ -31,8 +31,8 @@ std::pair<float, float> sobel_vector(const image& i, int x, int y)
 	1,  0, -1
     });
 
-  const int vertical = vertical_gradient.apply_to_pixel(i, x, y);
-  const int horizontal = horizontal_gradient.apply_to_pixel(i, x, y);
+  const int vertical = vertical_gradient.apply_to_pixel_no_rounding(i, x, y);
+  const int horizontal = horizontal_gradient.apply_to_pixel_no_rounding(i, x, y);
 
   return std::make_pair(vertical, horizontal);
 }
