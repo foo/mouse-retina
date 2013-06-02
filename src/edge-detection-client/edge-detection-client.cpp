@@ -87,8 +87,11 @@ int main(int argc, char* argv[])
       for(int thigh = thresh_high1; thigh <= thresh_high2; thigh += 10)
         for(int tlow = thigh-thresh_diff1; tlow <= thigh-thresh_diff2; tlow += 10)
           {
-            image i_edge_detection =
-              detect_edges(i,thigh,tlow,supp_radius,0,
+            image i_edge_detection;
+	    rgb_image i_before_join;
+	    rgb_image i_after_join;
+	    std::tie(i_edge_detection, i_before_join, i_after_join)
+	      = detect_edges(i,thigh,tlow,supp_radius,0,
 		       opts.float_var("ep1"),
 		       opts.float_var("ep2"),
 		       opts.float_var("ep3"),
@@ -98,13 +101,28 @@ int main(int argc, char* argv[])
 		       opts.int_var("union_ray"),
 		       opts.int_var("thresh_ray")
 		       );
-
-            {
+	    {
               std::stringstream ss;
-              ss << "../output/edge-detection/edge_detection" << thigh << "_"<< tlow << "_" << supp_radius<<"_" << 0 <<".pgm";
+              ss << "../output/edge-detection/edge_detection" << thigh << "_"<< tlow << "_" << supp_radius << ".pgm";
 
               std::cerr << "Exporting image to " << ss.str() << std::endl;
               pgm_export(i_edge_detection, boost::filesystem::path(ss.str()));
+            }
+
+            {
+              std::stringstream ss;
+              ss << "../output/edge-detection/edge_detection" << thigh << "_"<< tlow << "_" << supp_radius << "before.pgm";
+
+              std::cerr << "Exporting image to " << ss.str() << std::endl;
+              ppm_export(i_before_join, boost::filesystem::path(ss.str()));
+            }
+	    
+	    {
+              std::stringstream ss;
+              ss << "../output/edge-detection/edge_detection" << thigh << "_"<< tlow << "_" << supp_radius << "after.pgm";
+
+              std::cerr << "Exporting image to " << ss.str() << std::endl;
+              ppm_export(i_after_join, boost::filesystem::path(ss.str()));
             }
           }
     

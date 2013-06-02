@@ -1,16 +1,4 @@
 #include "gradient.hpp"
-#include "../image/image.hpp"
-#include "../image/ppm-export.hpp"
-#include "../image/pgm-export.hpp"
-#include "../filters/gaussian.hpp"
-#include "../filters/sharpen.hpp"
-#include "../utils/unionfind.hpp"
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/fstream.hpp>
-#include <iostream>
-#include <cassert>
-#include <sstream>
-#include <iomanip>
 
 double angle_from_two(double x, double y){
   if(iszero(x) && iszero(y)) return 0;
@@ -29,7 +17,7 @@ bool inline corners_on_different_sides(int &Sx, int &Sy, double Gx, double Gy){
 }
 
 
-void print_compounds(std::vector<Compound>&compound, int mode, char *path, image &r, image &g, image &b, int *compM, const union_find& det_unionfind);
+rgb_image print_compounds(std::vector<Compound>&compound, int mode, image &r, image &g, image &b, int *compM, const union_find& det_unionfind);
 
 void join(int x1,int y1,int x2,int y2,image& out, int color){
   if(x1 > x2){ std::swap(x1,x2); std::swap(y1,y2);}
@@ -43,9 +31,10 @@ void join(int x1,int y1,int x2,int y2,image& out, int color){
          if(out.pixel(x1,y)==0) out.pixel(x1,y) = color;
 }
 
-image detect_edges(const image& img1, int high_threshold, int low_threshold, int supp_radius, int kto,
-               float ep1, float ep2, float ep3, float sigma, bool print_color, bool do_matching,
-               int union_ray, int thresh_ray)
+std::tuple<image, rgb_image, rgb_image>
+detect_edges(const image& img1, int high_threshold, int low_threshold, int supp_radius, int kto,
+             float ep1, float ep2, float ep3, float sigma, bool print_color, bool do_matching,
+             int union_ray, int thresh_ray)
 {
   int R = supp_radius;
   int n = img1.width();
@@ -250,11 +239,7 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
       }
     }
 
-  char sciezka[100];
-  sprintf(sciezka, "../output/edge-detection/scc%d_%d_%d_%d_%d.ppm\n",
-          high_threshold, low_threshold, supp_radius, kto, 0);
-  if(print_color)
-    print_compounds(compound,0,sciezka,r,g,b,compM, det_unionfind);
+  rgb_image img_before_join = print_compounds(compound,0,r,g,b,compM, det_unionfind);
 
   int mode;
   if(do_matching) mode = 0;
@@ -267,15 +252,11 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
   //laczenie!
   //redukcja kosztu - wersja "light"
 
-  sprintf(sciezka, "../output/edge-detection/scc%d_%d_%d_%d_%d.ppm\n",
-          high_threshold, low_threshold, supp_radius, kto, 1);
-  if(print_color)
-    print_compounds(compound,1,sciezka,r,g,b,compM, det_unionfind);
-
-  return out;
+  rgb_image img_after_join = print_compounds(compound,1,r,g,b,compM, det_unionfind);
+  return std::make_tuple(out, img_before_join, img_after_join);
 }
 
-void print_compounds(std::vector<Compound>&compound, int mode, char *path, image &r, image &g, image &b, int *compM, const union_find& det_unionfind)
+rgb_image print_compounds(std::vector<Compound>&compound, int mode, image &r, image &g, image &b, int *compM, const union_find& det_unionfind)
 {
   int n = r.width();
   int m = r.height();
@@ -322,5 +303,5 @@ void print_compounds(std::vector<Compound>&compound, int mode, char *path, image
       }
     }
   }
-  ppm_export(r,g,b, boost::filesystem::path(path));
+  return std::make_tuple(r, g, b);
 }
