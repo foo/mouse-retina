@@ -12,6 +12,9 @@ clean-small-dataset:
 clean-large-dataset:
 	rm -rf images/e1088_mag1_large.zip images/e1088_mag1_large
 
+build-utils:
+	cd src/utils && make
+
 build-traverser:
 	cd src/traverser && make
 
@@ -42,7 +45,7 @@ run-dataset-client:
 build-edge-detection: build-filters
 	cd src/edge-detection && make -B
 
-build-edge-detection-client: build-edge-detection build-config
+build-edge-detection-client: build-edge-detection build-config build-utils
 	cd src/edge-detection-client && make
 
 run-edge-detection-client: clean-edge-detection

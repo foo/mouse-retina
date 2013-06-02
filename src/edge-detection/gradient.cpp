@@ -4,6 +4,7 @@
 #include "../image/pgm-export.hpp"
 #include "../filters/gaussian.hpp"
 #include "../filters/sharpen.hpp"
+#include "../utils/unionfind.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <iostream>
@@ -26,40 +27,6 @@ bool inline corners_on_different_sides(int &Sx, int &Sy, double Gx, double Gy){
   return (((Sx+0.5)*Gy - (Sy+0.5)*Gx) * ((Sx-0.5)*Gy - (Sy-0.5)*Gx) < 0 ||
           ((Sx+0.5)*Gy - (Sy-0.5)*Gx) * ((Sx-0.5)*Gy - (Sy+0.5)*Gx) < 0 );
 }
-
-struct union_find
-{
-private:
-  std::vector<int> p;
-public:
-  int Find(int x){
-    if(p[x] == x) return x;
-    p[x] = Find(p[x]);
-    return p[x];
-  }
-
-  bool Union(int x, int y){
-    if(Find(x) == Find(y)) return false;
-    p[p[x]] = p[y];
-    return true;
-  }
-
-  bool OwnRank(int x) const
-  {
-    return p[x] == x;
-  }
-
-  int Parent(int x) const
-  {
-    return p[x];
-  }
-
-  union_find(int sz)
-  {
-    p.resize(sz);
-    for(int i = 0; i < sz; i++) p[i] = i;
-  }
-};
 
 
 void print_compounds(std::vector<Compound>&compound, int mode, char *path, image &r, image &g, image &b, int *compM, const union_find& det_unionfind);
