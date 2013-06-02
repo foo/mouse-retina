@@ -23,5 +23,3 @@ struct gradient
 image detect_edges(const image& i, int high_threshold, int low_threshold, int supp_radius, int kto,
                float ep1, float ep2, float ep3, float sigma, bool print_color, bool do_matching,
                int union_ray, int thresh_ray);
-double angle_from_two(double x, double y);
-void print_compounds(std::vector<Compound>&compounds,int mode, char *path, image &r, image &g, image &b,int*compM);

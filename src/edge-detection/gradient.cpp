@@ -42,9 +42,15 @@ struct union_find
     p[p[x]] = p[y];
     return true;
   }
+
+  bool OwnRank(int x) const
+  {
+    return p[x] == x;
+  }
 };
 
-union_find det_unionfind;
+
+void print_compounds(std::vector<Compound>&compound, int mode, char *path, image &r, image &g, image &b, int *compM, const union_find& det_unionfind);
 
 inline int min(int a, int b){
   if(a < b) return a; return b;
@@ -73,6 +79,8 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
   int R = supp_radius;
   int n = img1.width();
   int m = img1.height();
+
+  union_find det_unionfind;
 
   gradient gradients[n][m];
   int supressed[n][m];
@@ -276,7 +284,7 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
   sprintf(sciezka, "../output/edge-detection/scc%d_%d_%d_%d_%d.ppm\n",
           high_threshold, low_threshold, supp_radius, kto, 0);
   if(print_color)
-    print_compounds(compound,0,sciezka,r,g,b,compM);
+    print_compounds(compound,0,sciezka,r,g,b,compM, det_unionfind);
 
   int mode;
   if(do_matching) mode = 0;
@@ -292,13 +300,13 @@ image detect_edges(const image& img1, int high_threshold, int low_threshold, int
   sprintf(sciezka, "../output/edge-detection/scc%d_%d_%d_%d_%d.ppm\n",
           high_threshold, low_threshold, supp_radius, kto, 1);
   if(print_color)
-    print_compounds(compound,1,sciezka,r,g,b,compM);
+    print_compounds(compound,1,sciezka,r,g,b,compM, det_unionfind);
 
   return out;
 }
 
-void print_compounds(std::vector<Compound>&compound, int mode, char *path, image &r, image &g, image &b, int *compM){
-
+void print_compounds(std::vector<Compound>&compound, int mode, char *path, image &r, image &g, image &b, int *compM, const union_find& det_unionfind)
+{
   int n = r.width();
   int m = r.height();
   int fx,fy,ktos,y;
