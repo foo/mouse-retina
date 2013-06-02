@@ -18,14 +18,6 @@ Gradient::Gradient(int x_, int y_, double ang_, double mag_){
 double angle_from_two(double x, double y){
   if(iszero(x) && iszero(y)) return 0;
   return atan2(y,x);
-  /*if(iszero(x)){
-    if(iszero(y)) return 0;
-    if(y > 0) return PI/2.;
-    else return 2*PI-PI/2.;
-    }
-    else if(x > 0) return atan2(y,x);
-    else if(iszero(y) || y > 0) return atan2(y,x)+PI;
-    else return atan2(y,x)-PI;*/
 }
 
 bool inline clos(double a, double b, double ep){
@@ -126,33 +118,6 @@ image gradient(const image& img1, int high_threshold, int low_threshold, int sup
       supressed[i][j] = 0;
 
       int I,J;
-      /*int x[2],y[2];
-        double a = ang[i][j]; if(a<0) a+=2*PI;
-        if              (a>=0 && a<PI/8)         {x[0]=1;y[0]=0;x[1]=-1;y[1]=0;}
-        else if (a>=PI/8 && a<PI/4+PI/8)     {x[0]=1;y[0]=1;x[1]=-1;y[1]=-1;}
-        else if (a>=PI/4+PI/8 && a<PI/2+PI/8){x[0]=0;y[0]=1;x[1]=0;y[1]=-1;}
-        else if (a>=PI/2+PI/8 && a<PI/2+PI/4+PI/8)  {x[0]=-1;y[0]=1;x[1]=1;y[1]=-1;}
-        else if (a>=PI/2+PI/4+PI/8 && a<PI+PI/8){x[0]=1;y[0]=0;x[1]=-1;y[1]=0;}
-        else if (a>=PI+PI/8 && a<PI+PI/4+PI/8){x[0]=1;y[0]=1;x[1]=-1;y[1]=-1;}
-        else if (a>=PI+PI/4+PI/8 && a<PI+PI/2+PI/8){x[0]=0;y[0]=1;x[1]=0;y[1]=-1;}
-        else if (a>=PI+PI/2+PI/8 && a<PI+PI/2+PI/4+PI/8){x[0]=-1;y[0]=1;x[1]=1;y[1]=-1;}
-        else if (a>=PI+PI/2+PI/4+PI/8 && a < 2*PI) {x[0]=1;y[0]=0;x[1]=-1;y[1]=0;}
-
-        //for(int x = -R; x <= R; x++){
-        //      for(int y = -R; y <= R; y++){
-        for(int u = 0; u < 2; u++){
-        I = i+x[u]; J = j+y[u];
-        if(I < 0 || I >= n || J < 0 || J>=m) continue;
-
-        if(corners_on_different_sides(x[u],y[u],LX[i][j],LY[i][j]) ||
-        corners_on_different_sides(x[u],y[u],-LX[i][j],-LY[i][j])){
-        if(mag[I][J] > mag[i][j] && clos(ang[i][j],ang[I][J],ep1)){
-        supressed[i][j] = true;
-        break;
-        }
-        }
-
-        }*/
       for(int x = -R; x <= R; x++){
         for(int y = -R; y <= R; y++){
           I = i+x; J = j+y;
@@ -172,9 +137,7 @@ image gradient(const image& img1, int high_threshold, int low_threshold, int sup
         out.pixel(i,j) = 0;
         continue;
       }
-      //out.pixel(i,j) = mag[i][j]/2;
       if(!supressed[i][j]){
-        //res.push_back(Gradient(i,j,ang[i][j],mag[i][j]));
         out.pixel(i,j) = 100;
         edges.push(std::make_pair(i,j));
       } else out.pixel(i,j) = 0;
@@ -316,16 +279,6 @@ image gradient(const image& img1, int high_threshold, int low_threshold, int sup
       }
     }
 
-  /*image imgC[5];
-    for(int i = 0; i < 5; i++) imgC[i] = compound[compM[V[i].second]].print_me();
-    for(int i = 0; i < 5; i++){
-    char path[100];
-    sprintf(path, "../output/edge-detection/comp%d_%d_%d_%d_%d.pgm\n",
-    high_threshold, low_threshold, supp_radius, kto, i);
-    pgm_export(imgC[i], boost::filesystem::path(path));
-    }*/
-
-
   char sciezka[100];
   sprintf(sciezka, "../output/edge-detection/scc%d_%d_%d_%d_%d.ppm\n",
           high_threshold, low_threshold, supp_radius, kto, 0);
@@ -348,37 +301,7 @@ image gradient(const image& img1, int high_threshold, int low_threshold, int sup
   if(print_color)
     print_compounds(compound,1,sciezka,r,g,b,compM);
 
-  /*
-    for(int i = 0; i < n; i++){
-    for(int j = 0; j < m; j++){
-    //out.pixel(i,j) = 0;
-    if(print_color){
-    r.pixel(i,j) = 0;
-    g.pixel(i,j) = 0;
-    b.pixel(i,j) = 0;
-    }
-    if(!supressed[i][j]){
-    if(print_color){
-    father = Find(i*m+j);
-    fx = father/m;
-    fy = father%m;
-    r.pixel(i,j) = r.pixel(fx,fy);
-    g.pixel(i,j) = g.pixel(fx,fy);
-    b.pixel(i,j) = b.pixel(fx,fy);
-    }
-    if(Find(i*m+j)==V[kto].second)  out.pixel(i,j) = 255;
-    }
-    //out.pixel(i,j) = col[Find(i*m+j)];
-    }
-    }*/
-  /*image lalala = compound[compM[V[0].second]].print_me();
-    char compo[100];
-    sprintf(compo, "../output/edge-detection/comp%d_%d_%d_%d.pgm\n",
-    high_threshold, low_threshold, supp_radius, kto);
-    pgm_export(lalala, boost::filesystem::path(compo));*/
-
   return out;
-  //return res;
 }
 
 void print_compounds(std::vector<Compound>&compound, int mode, char *path, image &r, image &g, image &b, int *compM){
@@ -406,7 +329,6 @@ void print_compounds(std::vector<Compound>&compound, int mode, char *path, image
     }
 
   for(int i = 0; i < scc; i++){
-    //          compound[i].deforest_me();
     //backward
     printf("%d ", compound[i].cR);
     for(int x = 0; x < compound[i].n; x++){
@@ -429,10 +351,5 @@ void print_compounds(std::vector<Compound>&compound, int mode, char *path, image
       }
     }
   }
-  /*printf("Exporting color image to output/edge-detection/scc%d_%d_%d_%d.ppm\n",
-    high_threshold, low_threshold, supp_radius, kto);*/
-  //char sciezka[1000];
-  /*sprintf(sciezka, "../output/edge-detection/scc%d_%d_%d_%d_%d.ppm\n",
-    high_threshold, low_threshold, supp_radius, kto, mode);*/
   ppm_export(r,g,b, boost::filesystem::path(path));
 }
