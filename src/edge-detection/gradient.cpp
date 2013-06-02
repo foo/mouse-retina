@@ -188,7 +188,6 @@ image gradient(const image& img1, int high_threshold, int low_threshold, int sup
 
   int cc = 0;
   int ile[n*m], scc=0;
-  srand(time(NULL));
   int compM[n*m];
   int father,fx,fy,ktos,y;
 
