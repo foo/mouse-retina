@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
     ("ep3", po::value<float>(), "")
     ("thresh_ray", po::value<int>(), "")
     ("union_ray", po::value<int>(), "")
-    ("print_color", po::value<bool>(), "")
+    ("print_compounds", po::value<bool>(), "")
     ("do_matching", po::value<bool>(), "")
     ;
 
@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
 		       opts.float_var("ep1"),
 		       opts.float_var("ep2"),
 		       opts.float_var("ep3"),
-		       opts.bool_var("print_color"),
+		       opts.bool_var("print_compounds"),
 		       opts.bool_var("do_matching"),
 		       opts.int_var("union_ray"),
 		       opts.int_var("thresh_ray")
@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
 
             {
               std::stringstream ss;
-              ss << "../output/edge-detection/edge_detection" << thigh << "_"<< tlow << "_" << supp_radius << "before.pgm";
+              ss << "../output/edge-detection/edge_detection" << thigh << "_"<< tlow << "_" << supp_radius << "before.ppm";
 
               std::cerr << "Exporting image to " << ss.str() << std::endl;
               ppm_export(i_before_join, boost::filesystem::path(ss.str()));
@@ -129,7 +129,7 @@ int main(int argc, char* argv[])
 	    
 	    {
               std::stringstream ss;
-              ss << "../output/edge-detection/edge_detection" << thigh << "_"<< tlow << "_" << supp_radius << "after.pgm";
+              ss << "../output/edge-detection/edge_detection" << thigh << "_"<< tlow << "_" << supp_radius << "after.ppm";
 
               std::cerr << "Exporting image to " << ss.str() << std::endl;
               ppm_export(i_after_join, boost::filesystem::path(ss.str()));

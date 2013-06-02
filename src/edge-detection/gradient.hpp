@@ -37,5 +37,5 @@ struct gradient
 
 std::tuple<image, rgb_image, rgb_image>
 detect_edges(const image& i, int high_threshold, int low_threshold, int supp_radius, int kto,
-             float ep1, float ep2, float ep3, bool print_color, bool do_matching,
+             float ep1, float ep2, float ep3, bool print_compounds, bool do_matching,
              int union_ray, int thresh_ray);

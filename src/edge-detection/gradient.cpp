@@ -17,7 +17,7 @@ bool inline corners_on_different_sides(int &Sx, int &Sy, double Gx, double Gy){
 }
 
 
-rgb_image print_compounds(std::vector<Compound>&compound, int mode, image &r, image &g, image &b, int *compM, const union_find& det_unionfind);
+rgb_image color_compounds(std::vector<Compound>&compound, int mode, image &r, image &g, image &b, int *compM, const union_find& det_unionfind, bool print_compounds);
 
 void join(int x1,int y1,int x2,int y2,image& out, int color){
   if(x1 > x2){ std::swap(x1,x2); std::swap(y1,y2);}
@@ -33,7 +33,7 @@ void join(int x1,int y1,int x2,int y2,image& out, int color){
 
 std::tuple<image, rgb_image, rgb_image>
 detect_edges(const image& img, int high_threshold, int low_threshold, int supp_radius, int kto,
-             float ep1, float ep2, float ep3, bool print_color, bool do_matching,
+             float ep1, float ep2, float ep3, bool print_compounds, bool do_matching,
              int union_ray, int thresh_ray)
 {
   int R = supp_radius;
@@ -69,10 +69,10 @@ detect_edges(const image& img, int high_threshold, int low_threshold, int supp_r
       for(int x = -R; x <= R; x++){
         for(int y = -R; y <= R; y++){
           if((x==0 && y==0) || !img.is_inside(i+x, j+y))
-	    continue;
+            continue;
 
-	  gradient g_translated = gradients[i+x][j+y];
-	  
+          gradient g_translated = gradients[i+x][j+y];
+
           if(corners_on_different_sides(x, y, g.x, g.y) ||
              corners_on_different_sides(x, y, -g.x, -g.y)) {
             if(g_translated.mag > g.mag && clos(g.angle, g_translated.angle, ep1)){
@@ -104,11 +104,11 @@ detect_edges(const image& img, int high_threshold, int low_threshold, int supp_r
     for(int x = -thresh_ray; x <= thresh_ray; x++){
       for(int y = -thresh_ray; y <= thresh_ray; y++){
         int I = i+x;
-	int J = j+y;
+        int J = j+y;
         if((x==0 && y==0) || !img.is_inside(I, J)) continue;
         if(supressed[I][J]!=2) continue;
 
-	gradient g_translated = gradients[I][J];
+        gradient g_translated = gradients[I][J];
 
         if(corners_on_different_sides(x, y, g.y, -g.x) ||
            corners_on_different_sides(x, y, -g.y,g.x)){
@@ -134,7 +134,7 @@ detect_edges(const image& img, int high_threshold, int low_threshold, int supp_r
       for(int x = -union_ray; x <= union_ray; x++){
         for(int y = -union_ray; y <= union_ray; y++){
           int I = i+x;
-	  int J = j+y;
+          int J = j+y;
           if((x==0 && y==0) || I < 0 || I >= n || J < 0 || J>=m) continue;
           if(supressed[I][J]) continue;
           //prostopadle
@@ -146,10 +146,10 @@ detect_edges(const image& img, int high_threshold, int low_threshold, int supp_r
             }
             if(clos(gradients[i][j].angle,gradients[I][J].angle,ep3)){
               if(det_unionfind.Union(i*m+j, I*m+J))
-		{
-	        detector.G[i*m+j].push_back(I*m+J);
-		detector.G[I*m+J].push_back(i*m+j);
-		}
+                {
+                  detector.G[i*m+j].push_back(I*m+J);
+                  detector.G[I*m+J].push_back(i*m+j);
+                }
             }
           }
         }
@@ -163,32 +163,26 @@ detect_edges(const image& img, int high_threshold, int low_threshold, int supp_r
   int father,fx,fy,ktos,y;
 
   image r,g,b;
-  if(print_color){
-    r = image(img);
-    g = image(img);
-    b = image(img);
-  }
+  r = image(img);
+  g = image(img);
+  b = image(img);
 
   for(int i = 0; i < n*m; i++){
     ile[i] = 0;
     fx = i/m;
     fy = i%m;
     if(!supressed[fx][fy] && det_unionfind.OwnRank(i)) {
-      if(print_color){
-        cc = (cc+20)%200;
-        r.pixel(fx,fy) = rand()%256;
-        g.pixel(fx,fy) = rand()%256;
-        b.pixel(fx,fy) = rand()%256;
-      }
+      cc = (cc+20)%200;
+      r.pixel(fx,fy) = rand()%256;
+      g.pixel(fx,fy) = rand()%256;
+      b.pixel(fx,fy) = rand()%256;
       compM[i]=scc;
       scc++;
     }
     else{
-      if(print_color){
-        r.pixel(fx,fy) = 0;
-        g.pixel(fx,fy) = 0;
-        b.pixel(fx,fy) = 0;
-      }
+      r.pixel(fx,fy) = 0;
+      g.pixel(fx,fy) = 0;
+      b.pixel(fx,fy) = 0;
       compM[i] = -1;
     }
   }
@@ -204,9 +198,11 @@ detect_edges(const image& img, int high_threshold, int low_threshold, int supp_r
   std::sort(V.begin(), V.end());
   std::reverse(V.begin(), V.end());
 
-  for(int i = 0; i < 40 && i < V.size(); i++) printf("%d ", V[i].first);
-  printf("\n");
-
+  if(print_compounds)
+    {
+      for(int i = 0; i < 40 && i < V.size(); i++) printf("%d ", V[i].first);
+      printf("\n");
+    }
   //TEST
   int ff;
   for(int i = 0; i < n; i++){
@@ -234,7 +230,7 @@ detect_edges(const image& img, int high_threshold, int low_threshold, int supp_r
       }
     }
 
-  rgb_image img_before_join = print_compounds(compound,0,r,g,b,compM, det_unionfind);
+  rgb_image img_before_join = color_compounds(compound,0,r,g,b,compM, det_unionfind, print_compounds);
 
   int mode;
   if(do_matching) mode = 0;
@@ -247,11 +243,11 @@ detect_edges(const image& img, int high_threshold, int low_threshold, int supp_r
   //laczenie!
   //redukcja kosztu - wersja "light"
 
-  rgb_image img_after_join = print_compounds(compound,1,r,g,b,compM, det_unionfind);
+  rgb_image img_after_join = color_compounds(compound,1,r,g,b,compM, det_unionfind, print_compounds);
   return std::make_tuple(out, img_before_join, img_after_join);
 }
 
-rgb_image print_compounds(std::vector<Compound>&compound, int mode, image &r, image &g, image &b, int *compM, const union_find& det_unionfind)
+rgb_image color_compounds(std::vector<Compound>&compound, int mode, image &r, image &g, image &b, int *compM, const union_find& det_unionfind, bool print_compounds)
 {
   int n = r.width();
   int m = r.height();
@@ -276,8 +272,11 @@ rgb_image print_compounds(std::vector<Compound>&compound, int mode, image &r, im
     }
 
   for(int i = 0; i < scc; i++){
-    //backward
-    printf("%d ", compound[i].cR);
+    if(print_compounds)
+      {
+        // backward
+        std::cout << compound[i].cR << " ";
+      }
     for(int x = 0; x < compound[i].n; x++){
       r.pixel(compound[i].X[x], compound[i].Y[x]) = compound[i].cR;
       g.pixel(compound[i].X[x], compound[i].Y[x]) = compound[i].cG;
