@@ -1,7 +1,7 @@
-MODULE=config-module
-SUBMODULES=knossos-config options
+MODULE=utils-module
+SUBMODULES=unionfind
 
-CC=g++
+CC=mpic++
 FLAGS=-Wall -std=c++0x
 BIN=../../bin
 

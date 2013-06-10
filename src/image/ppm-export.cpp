@@ -1,5 +1,10 @@
 #include "ppm-export.hpp"
 
+void ppm_export(const rgb_image& i, const boost::filesystem::path& path)
+{
+  ppm_export(std::get<0>(i), std::get<1>(i), std::get<2>(i), path);
+}
+
 void ppm_export(const image& r, const image& g, const image& b, const boost::filesystem::path& path)
 {
   if(exists(path))

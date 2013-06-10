@@ -1,4 +1,4 @@
-#include "detector.hpp"
+#include "compound.hpp"
 
 Compound::Compound(){
 	n=0;

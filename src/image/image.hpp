@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <iterator>
 #include <cassert>
+#include <tuple>
 
 class image
 {
@@ -23,3 +24,5 @@ public:
   image twice_larger();
   image twice_smaller();
 };
+
+typedef std::tuple<image, image, image> rgb_image;

@@ -2,8 +2,7 @@ MODULE=traverser-module
 SUBMODULES=worker manager
 
 CC=mpic++
-BOOST=-lboost_filesystem -lboost_system -lboost_mpi -lboost_serialization
-FLAGS=-Wall -std=c++0x $(BOOST)
+FLAGS=-Wall -std=c++0x
 BIN=../../bin
 
 SUBMODULE_OBJS:=$(SUBMODULES:=.o)

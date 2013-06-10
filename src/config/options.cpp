@@ -68,6 +68,12 @@ int options::int_var(const std::string& var) const
   return vars[var].as<int>();
 }
 
+bool options::bool_var(const std::string& var) const
+{
+  check_presence(var);
+  return vars[var].as<bool>();
+}
+
 std::string options::string_var(const std::string& var) const
 {
   check_presence(var);

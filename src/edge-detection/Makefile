@@ -1,9 +1,8 @@
 MODULE=edge-detection-module
-SUBMODULES=gradient detector matcher
+SUBMODULES=gradient edge-detection compound matcher
 
 CC=g++
-BOOST=-lboost_filesystem -lboost_system
-FLAGS=-Wall -std=c++0x $(BOOST)
+FLAGS=-Wall -std=c++0x
 BIN=../../bin
 
 SUBMODULE_OBJS:=$(SUBMODULES:=.o)

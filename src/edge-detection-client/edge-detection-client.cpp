@@ -13,89 +13,129 @@
 #include "../filters/sharpen.hpp"
 #include "../filters/threshold.hpp"
 #include "../filters/dilation.hpp"
-#include "../edge-detection/gradient.hpp"
+#include "../edge-detection/edge-detection.hpp"
+#include "../config/options.hpp"
+
+namespace po = boost::program_options;
 
 int main(int argc, char* argv[])
 {
-  const char* const dataset_dir = "../images/e1088_mag1_small";
-  dataset d(dataset_dir);
+  po::options_description opt_desc("Edge detection client. Available options");
 
-  std::cerr << "Obtaining image from grid." << std::endl;
-  
-  //image i = cross_section(d, 10, 300, 10, 300, 100);
-  image i = cross_section_z(d, 50, 320, 50, 320, 120);
-  gaussian(i,0.8408964);
-  
+  opt_desc.add_options()
+    ("dataset-path,d",
+     po::value<std::string>()->default_value("../images/e1088_mag1_small"),
+     "Specify path to dataset in Knossos format.")
+    ("cross-section-x1",
+     po::value<int>()->default_value(50),
+     "Cross section dimensions. X coordinate of top-left corner.")
+    ("cross-section-y1",
+     po::value<int>()->default_value(50),
+     "Cross section dimensions. Y coordinate of top-left corner.")
+    ("cross-section-x2",
+     po::value<int>()->default_value(320),
+     "Cross section dimensions. X coordinate of bottom-right corner.")
+    ("cross-section-y2",
+     po::value<int>()->default_value(320),
+     "Cross section dimensions. Y coordinate of bottom-right corner.")
+    ("cross-section-z",
+     po::value<int>()->default_value(120),
+     "Cross section dimensions. Z coordinate of cross-section plane.")
+    ("gaussian_sigma", po::value<float>()->default_value(0.8408964), "")
+    ("sup_rad1", po::value<int>(), "")
+    ("sup_rad2", po::value<int>(), "")
+    ("thresh_high1", po::value<int>(), "")
+    ("thresh_high2", po::value<int>(), "")
+    ("thresh_diff1", po::value<int>(), "")
+    ("thresh_diff2", po::value<int>(), "")
+    ("ep1", po::value<float>(), "")
+    ("ep2", po::value<float>(), "")
+    ("ep3", po::value<float>(), "")
+    ("thresh_ray", po::value<int>(), "")
+    ("union_ray", po::value<int>(), "")
+    ("print_compounds", po::value<bool>(), "")
+    ("do_matching", po::value<bool>(), "")
+    ;
+
+  options opts(opt_desc, argc, argv);
+
+  dataset d(opts.string_var("dataset-path"));
+
+  image i = cross_section_z(d,
+                            opts.int_var("cross-section-x1"),
+                            opts.int_var("cross-section-x2"),
+                            opts.int_var("cross-section-y1"),
+                            opts.int_var("cross-section-y2"),
+                            opts.int_var("cross-section-z"));
+
   {
     std::cerr
       << "Exporting original image to output/edge-detection/original.pgm."
       << std::endl;
-  
-    pgm_export(i, boost::filesystem::path(
-	"../output/edge-detection/original.pgm"));
-	
-    pgm_export(sharpen(i), boost::filesystem::path(
-	"../output/edge-detection/original_gauss.pgm"));
+
+    pgm_export(i, boost::filesystem::path("../output/edge-detection/original.pgm"));
   }
+
+  image magnified = gaussian(i, opts.float_var("gaussian_sigma"));
 
   {
     std::cerr
-      << "Edge detection."
+      << "Exporting magnified image to output/edge-detection/magnified.pgm."
       << std::endl;
-      
-    FILE * params = fopen("../src/edge-detection/params.conf", "r");  
-    char name[20]={0}; 
-	int sup_rad1, sup_rad2;
-	int thresh_high1, thresh_high2;
-	int thresh_diff1, thresh_diff2;
-	
-	while(fscanf(params, "%s", name)!=EOF){
-		if(strcmp(name,"sup_rad1")==0) fscanf(params,"%d", &sup_rad1);
-		if(strcmp(name,"sup_rad2")==0) fscanf(params,"%d", &sup_rad2);
-		if(strcmp(name,"thresh_high1")==0) fscanf(params,"%d", &thresh_high1);
-		if(strcmp(name,"thresh_high2")==0) fscanf(params,"%d", &thresh_high2);
-		if(strcmp(name,"thresh_diff1")==0) fscanf(params,"%d", &thresh_diff1);
-		if(strcmp(name,"thresh_diff2")==0) fscanf(params,"%d", &thresh_diff2);
-	}
-	fclose(params);
-	
-	for(int supp_radius = sup_rad1; supp_radius <= sup_rad2; supp_radius++)
-    for(int thigh = thresh_high1; thigh <= thresh_high2; thigh += 10)
-    //for(int which = 0; which < 20; which+=100)
-    for(int tlow = thigh-thresh_diff1; tlow <= thigh-thresh_diff2; tlow += 10)
-    {
-      image i_edge_detection =
-      gradient(i,thigh,tlow,supp_radius,0);
-      /*gradient(
-			//sobel(
-			  sharpen(
-			gaussian5x5(i)),
-		 thigh, tlow, supp_radius, which);*/
-  		/*
-      image i_edge_detection_with_dilation =
-      gradient(
-		  erosion(
-			dilation(
-			sobel(
-			  sharpen(
-				gaussian5x5(i))))), threshold_value);
-		*/
-		
-      {
-	std::stringstream ss;
-	ss << "../output/edge-detection/edge_detection" << thigh << "_"<< tlow << "_" << supp_radius<<"_" << 0 <<".pgm";
-      
-	std::cerr	<< "Exporting image to " << ss.str() << std::endl;
-	pgm_export(i_edge_detection, boost::filesystem::path(ss.str()));
-      }/*
-      {
-	std::stringstream ss;
-	ss << "../output/edge-detection/edge_detection_minkowski" << threshold_value << ".pgm";
-      
-	std::cerr	<< "Exporting image to " << ss.str() << std::endl;
-	pgm_export(i_edge_detection_with_dilation, boost::filesystem::path(ss.str()));
-      }*/
-    }
+
+    pgm_export(magnified, boost::filesystem::path("../output/edge-detection/magnified.pgm"));
+  }
+  
+
+  {
+    int sup_rad1 = opts.int_var("sup_rad1");
+    int sup_rad2 = opts.int_var("sup_rad2");
+    int thresh_high1 = opts.int_var("thresh_high1");
+    int thresh_high2 = opts.int_var("thresh_high2");
+    int thresh_diff1 = opts.int_var("thresh_diff1");
+    int thresh_diff2 = opts.int_var("thresh_diff2");
+    for(int supp_radius = sup_rad1; supp_radius <= sup_rad2; supp_radius++)
+      for(int thigh = thresh_high1; thigh <= thresh_high2; thigh += 10)
+        for(int tlow = thigh-thresh_diff1; tlow <= thigh-thresh_diff2; tlow += 10)
+          {
+            image i_edge_detection;
+	    rgb_image i_before_join;
+	    rgb_image i_after_join;
+	    std::tie(i_edge_detection, i_before_join, i_after_join)
+	      = detect_edges(magnified,thigh,tlow,supp_radius,0,
+		       opts.float_var("ep1"),
+		       opts.float_var("ep2"),
+		       opts.float_var("ep3"),
+		       opts.bool_var("print_compounds"),
+		       opts.bool_var("do_matching"),
+		       opts.int_var("union_ray"),
+		       opts.int_var("thresh_ray")
+		       );
+	    {
+              std::stringstream ss;
+              ss << "../output/edge-detection/edge_detection" << thigh << "_"<< tlow << "_" << supp_radius << ".pgm";
+
+              std::cerr << "Exporting image to " << ss.str() << std::endl;
+              pgm_export(i_edge_detection, boost::filesystem::path(ss.str()));
+            }
+
+            {
+              std::stringstream ss;
+              ss << "../output/edge-detection/edge_detection" << thigh << "_"<< tlow << "_" << supp_radius << "before.ppm";
+
+              std::cerr << "Exporting image to " << ss.str() << std::endl;
+              ppm_export(i_before_join, boost::filesystem::path(ss.str()));
+            }
+	    
+	    {
+              std::stringstream ss;
+              ss << "../output/edge-detection/edge_detection" << thigh << "_"<< tlow << "_" << supp_radius << "after.ppm";
+
+              std::cerr << "Exporting image to " << ss.str() << std::endl;
+              ppm_export(i_after_join, boost::filesystem::path(ss.str()));
+            }
+          }
+    
   }
 
   std::cerr << "Program finished successfully." << std::endl;
