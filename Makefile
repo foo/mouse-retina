@@ -42,9 +42,18 @@ build-dataset-client: build-dataset build-config
 run-dataset-client:
 	cd bin/ && ./dataset-client
 
+build-slice-joiner:
+	cd src/slice-joiner && make
+	
 build-edge-detection: build-filters
-	cd src/edge-detection && make -B
+	cd src/edge-detection && make
 
+build-slice-joiner-client: build-slice-joiner build-config build-utils
+	cd src/slice-joiner-client && make
+
+run-slice-joiner-client: build-slice-joiner-client
+	cd bin/ && ./slice-joiner-client
+			
 build-edge-detection-client: build-edge-detection build-config build-utils
 	cd src/edge-detection-client && make
 
@@ -69,8 +78,7 @@ build-image-client: build-dataset build-image build-config
 run-image-client: clean-image-client-pgm
 	cd bin && ./image-client
 
-build-clients: build-dataset-client build-image-client build-filters-client
-
+build-clients: build-dataset-client build-image-client build-filters-client build-slice-joiner-client
 clean-bin:
 	rm -f bin/*.o bin/dataset-client bin/image-client bin/filters-client
 	cd src/image && make clean

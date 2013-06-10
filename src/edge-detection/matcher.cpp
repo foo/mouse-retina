@@ -65,7 +65,7 @@ int** prepare_table(std::vector<Compound>&C){
 std::vector<int> matching(int n, int **w){
 //Najdroższe skojarzenie w grafie dwudzielnym - algorytm węgierski
 
-	printf("HUNGARY!!!!\n");
+	//printf("HUNGARY!!!!\n");
 	int INF = -1000000000;
     int lx[n], ly[n], skojx[n], skojy[n];
     int markx[n], marky[n], sl[n], par[n], q[n];
@@ -120,8 +120,8 @@ std::vector<int> matching(int n, int **w){
           v=y;
         }  
     }
-    for(int u = 0; u < n; u++) printf("%d ", skojx[u]);
-    printf("\n");
+    //for(int u = 0; u < n; u++) printf("%d ", skojx[u]);
+    //printf("\n");
     return std::vector<int>(skojx, skojx+n);
 }
 
