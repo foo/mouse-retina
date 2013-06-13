@@ -2,7 +2,8 @@ MODULE=dataset-module
 SUBMODULES=cube dataset dataset_files coord cross-section
 
 CC=g++
-FLAGS=-Wall -std=c++0x
+BOOST=-lboost_filesystem -lboost_system -lboost_program_options
+FLAGS=-Wall -std=c++0x $(BOOST)
 BIN=../../bin
 
 SUBMODULE_OBJS:=$(SUBMODULES:=.o)

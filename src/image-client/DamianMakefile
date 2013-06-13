@@ -1,0 +1,15 @@
+CC=g++
+BOOST=-lboost_filesystem -lboost_system -lboost_program_options
+FLAGS=-Wall -std=c++0x $(BOOST)
+BIN=../../bin
+LIB=$(BIN)/image-module.o $(BIN)/dataset-module.o $(BIN)/config-module.o
+BPATH=/usr/local/boost-build/boost/bin.v2/libs
+BPATH2=build/gcc-4.6/release/link-static/threading-multi
+
+all: $(BIN)/image-client $(BIN)/image-client2
+
+$(BIN)/image-client: image-client.cpp
+	$(CC) image-client.cpp $(LIB) $(FLAGS) -o $(BIN)/image-client $(BPATH)/filesystem/$(BPATH2)/libboost_filesystem.a $(BPATH)/system/$(BPATH2)/libboost_system.a $(BPATH)/program_options/$(BPATH2)/libboost_program_options.a 
+
+$(BIN)/image-client2: image-client2.cpp
+	$(CC) image-client2.cpp $(LIB) $(FLAGS) -o $(BIN)/image-client2 $(BPATH)/filesystem/$(BPATH2)/libboost_filesystem.a $(BPATH)/system/$(BPATH2)/libboost_system.a $(BPATH)/program_options/$(BPATH2)/libboost_program_options.a 

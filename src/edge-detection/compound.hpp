@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <map>
 #include <queue>
+#include <sstream>
 #include "../image/image.hpp"
 
 class Compound{
@@ -17,9 +18,12 @@ class Compound{
 		std::map<int,int>mapa;
 		Compound();
 		image print_me();
+		std::string print_me_to_string();
+		std::vector<std::vector<std::pair<double,double> > > 
+			read_us(std::stringstream &ss);
 		double dist(int i, int j);
 		void deforest_me();
-		void join_furthest(int mode);
+		void join_furthest(int mode);	
 		void paint_ball(image &img,int &x,int &y,int R);
 };
 

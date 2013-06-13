@@ -43,7 +43,7 @@ void join(int x1,int y1,int x2,int y2,image& out, int color){
 std::tuple<image, rgb_image, rgb_image>
 detect_edges(const image& img, int high_threshold, int low_threshold, int supp_radius, int kto,
              float ep1, float ep2, float ep3, bool print_compounds, bool do_matching,
-             int union_ray, int thresh_ray)
+             int union_ray, int thresh_ray, std::string slice_coords)
 {
   int R = supp_radius;
   int n = img.width();
@@ -245,15 +245,35 @@ detect_edges(const image& img, int high_threshold, int low_threshold, int supp_r
   if(do_matching) mode = 0;
   else mode = 1;
 
-  for(int i = 0; i < scc; i++)
+  for(int i = 0; i < scc; i++){
+  	//testujemy slice-joinera
     compound[i].join_furthest(mode);
+    compound[i].deforest_me();
+   }
 
   if(do_matching) join_by_matching(compound);
   //laczenie!
   //redukcja kosztu - wersja "light"
-
+	
+  {
+	  std::stringstream ss;
+	  ss << "../output/edge-detection/compounds" << slice_coords << "_" << 		high_threshold << "_"<< low_threshold << "_" << supp_radius << ".out";
+	  std::cerr << "Exporting compounds to " << ss.str() << std::endl;
+	  print_compounds_to_file(compound, boost::filesystem::path(ss.str()));
+  }
+  
   rgb_image img_after_join = color_compounds(compound,1,r,g,b,compM, det_unionfind, print_compounds);
   return std::make_tuple(out, img_before_join, img_after_join);
+}
+
+void print_compounds_to_file(std::vector<Compound>compound, 
+							 const boost::filesystem::path& path)
+{
+	boost::filesystem::ofstream ofs(path);
+	
+	for(int i = 0 ; i < compound.size(); i++){
+		ofs << (compound[i].print_me_to_string()) << std::endl;
+	}
 }
 
 rgb_image color_compounds(std::vector<Compound>&compound, int mode, image &r, image &g, image &b, int *compM, const union_find& det_unionfind, bool print_compounds)

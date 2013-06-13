@@ -16,6 +16,9 @@
 #include "../edge-detection/edge-detection.hpp"
 #include "../config/options.hpp"
 
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
+
 namespace po = boost::program_options;
 
 int main(int argc, char* argv[])
@@ -80,14 +83,21 @@ int main(int argc, char* argv[])
 
   {
     std::cerr
-      << "Exporting magnified image to output/edge-detection/magnified.pgm."
+      << "Exporting blurred image to output/edge-detection/blurred.pgm."
       << std::endl;
 
-    pgm_export(magnified, boost::filesystem::path("../output/edge-detection/magnified.pgm"));
+    pgm_export(magnified, boost::filesystem::path("../output/edge-detection/blurred.pgm"));
   }
   
 
   {
+    std::stringstream coords;
+    coords << opts.int_var("cross-section-x1") << "#";
+    coords << opts.int_var("cross-section-x2") << "#";
+    coords << opts.int_var("cross-section-y1") << "#";
+    coords << opts.int_var("cross-section-y2") << "#";
+    coords << opts.int_var("cross-section-z") << "#";
+    
     int sup_rad1 = opts.int_var("sup_rad1");
     int sup_rad2 = opts.int_var("sup_rad2");
     int thresh_high1 = opts.int_var("thresh_high1");
@@ -109,7 +119,8 @@ int main(int argc, char* argv[])
 		       opts.bool_var("print_compounds"),
 		       opts.bool_var("do_matching"),
 		       opts.int_var("union_ray"),
-		       opts.int_var("thresh_ray")
+		       opts.int_var("thresh_ray"),
+		       coords.str()
 		       );
 	    {
               std::stringstream ss;

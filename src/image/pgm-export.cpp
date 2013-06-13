@@ -10,7 +10,9 @@ void pgm_export(const image& i, const boost::filesystem::path& path)
   }
 
   boost::filesystem::ofstream pgm(path);
-
+	
+	std::cerr << "Jestem tuuuuu\n";
+	
   pgm << "P2\n"
       << i.width() << ' ' << i.height() << '\n'
       << 255 << '\n';

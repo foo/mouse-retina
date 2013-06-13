@@ -54,12 +54,12 @@ int main(int argc, char* argv[])
       z < opts.int_var("z-end");
       z ++)
   {
-    if(z % cube::dim == 0)
+    /*if(z % cube::dim == 0)
     {
       const int useless_z = (z / cube::dim) - 1;
 
       d.unload_z_lower_than(d.min_z + useless_z);
-    }
+    }*/
     
     std::cout << "Processing z coordinate " << z << std::endl;
     image i = cross_section_z(d,

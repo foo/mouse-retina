@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <string>
 #include <boost/filesystem.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/path_traits.hpp>
 
 #include "cube.hpp"
 #include "coord.hpp"

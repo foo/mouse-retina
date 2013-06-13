@@ -19,8 +19,8 @@ build-traverser:
 	cd src/traverser && make
 
 build-traverser-client: build-traverser build-config
-	cd src/traverser-client && make
-
+	cd src/traverser-client && make -f DamianMakefile
+	
 run-traverser-client:
 	cd bin/ && mpirun -n 2 ./traverser-client
 
@@ -28,7 +28,7 @@ build-config:
 	cd src/config && make
 
 build-config-client: build-config
-	cd src/config-client && make
+	cd src/config-client && make -f DamianMakefile
 
 run-config-client:
 	cd bin/ && ./config-client
@@ -37,7 +37,7 @@ build-dataset: build-config
 	cd src/dataset && make
 
 build-dataset-client: build-dataset build-config
-	cd src/dataset-client && make
+	cd src/dataset-client && make -f DamianMakefile
 
 run-dataset-client:
 	cd bin/ && ./dataset-client
@@ -49,13 +49,13 @@ build-edge-detection: build-filters
 	cd src/edge-detection && make
 
 build-slice-joiner-client: clean-edge-detection build-edge-detection build-slice-joiner build-config build-utils
-	cd src/slice-joiner-client && make
+	cd src/slice-joiner-client && make -f DamianMakefile
 
 run-slice-joiner-client: build-slice-joiner-client
 	cd bin/ && ./slice-joiner-client
 			
 build-edge-detection-client: build-edge-detection build-config build-utils
-	cd src/edge-detection-client && make
+	cd src/edge-detection-client && make -f DamianMakefile
 
 run-edge-detection-client: clean-edge-detection
 	cd bin/ && ./edge-detection-client
@@ -64,7 +64,7 @@ build-filters: build-dataset build-image
 	cd src/filters && make
 
 build-filters-client: build-filters build-config
-	cd src/filters-client && make
+	cd src/filters-client && make -f DamianMakefile
 
 run-filters-client: clean-filters-client-pgm
 	cd bin/ && ./filters-client
@@ -73,12 +73,12 @@ build-image:
 	cd src/image && make
 
 build-image-client: build-dataset build-image build-config
-	cd src/image-client && make
+	cd src/image-client && make -f DamianMakefile
 
 run-image-client: clean-image-client-pgm
 	cd bin && ./image-client
 
-build-clients: build-dataset-client build-image-client build-filters-client build-slice-joiner-client
+build-clients: build-dataset-client build-image-client build-filters-client build-slice-joiner-client build-edge-detection-client build-config-client
 clean-bin:
 	rm -f bin/*.o bin/dataset-client bin/image-client bin/filters-client
 	cd src/image && make clean

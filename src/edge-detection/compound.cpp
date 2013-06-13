@@ -138,6 +138,7 @@ image Compound::print_me()
 	join_furthest(true);
 	deforest_me();
 	
+	
 	for(int i = 0; i < n; i++){
 		for(int q = 0; q < graf[i].size(); q++){
 			int j = graf[i][q];
@@ -146,4 +147,83 @@ image Compound::print_me()
 	}
 	return img;
 }
+
+std::string Compound::print_me_to_string(){
+	//compound forms a cycle because it is (due to the way we join points
+	//during edge detection) a tree, with one edge added, then deforested
+	
+	//assert that compound is a cycle
+	bool assert_cycle = true;
+	for(int i = 0; i < n; i++)
+		if(graf[i].size() != 0 && graf[i].size() != 2){
+			assert_cycle = false;
+			break;
+		}
+		
+	if(assert_cycle == false) 
+		return std::string("Error!!! Compound does not form a cycle!");
+	
+	//look for a vertex on the cycle
+	int beg = 0, iter;
+	while(beg < n && graf[beg].size() != 2) beg++;
+	if(beg == n)
+		return std::string("Error!!! All vertices of the compound are isolated!");
+	
+	bool *odw = new bool[n];
+	for(int i = 0; i < n; i++) odw[i] = false;
+	iter = beg;
+	int left,right;
+	std::stringstream ss;
+	
+	while(true){	
+		odw[iter] = true;
+		ss << X[iter] << " " << Y[iter] << "  ";
+		
+		left = graf[iter][0];
+		right = graf[iter][1];
+		
+		if(odw[right] && odw[left]) break;
+		if(!odw[left]) iter = left;
+		else iter = right;
+	}
+	//adding the first vertex once again - for boost::geometry polygon syntax
+	ss << X[beg] << " " << Y[beg] << "  -1 -1" << std::endl;
+	
+	delete []odw;
+	return ss.str();
+}
+
+//zwraca cykle
+std::vector<std::vector<std::pair<double,double> > >
+	Compound::read_us(std::stringstream &ss){
+	
+	std::vector<std::vector<std::pair<double,double> > > c;
+	
+	int num=0, push_new=false;
+	double x,y;
+	//az do -1 -1
+	c.push_back(std::vector<std::pair<double,double> >());
+	
+	while(ss>>x){
+		if(!(ss>>y)) break;
+		
+		//std::cout << x << " " << y << std::endl;
+		if(x==-1 && y==-1){
+			//compound ends
+			push_new = true;
+			num++;
+			continue;
+		}
+		if(push_new){
+			c.push_back(std::vector<std::pair<double,double> >());
+			push_new = false;
+		}
+			
+		c[num].push_back(std::make_pair(x,y));
+	}
+	
+	std::cout << "Trud skonczony " << std::endl;
+	return c;
+}
+
 
